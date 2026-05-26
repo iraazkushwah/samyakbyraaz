@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📚 सम्यक् (Samyak) — Ultra-Premium Hindi Notes & Document Layout Engine
 
 **सम्यक् (Samyak)** is a modern, high-performance, and dependency-free web application designed to create beautiful, magazine-grade Hindi study materials and documents. Crafted with a focus on premium print-ready aesthetics, Samyak provides creators and educators with advanced page layout configurations, custom branding tools, and interactive content editors.
@@ -95,3 +96,6 @@ Contributions, suggestions, and feature requests are welcome! Feel free to open 
 
 ## 📜 License
 This project is open-source and available under the [MIT License](LICENSE).
+=======
+
+>>>>>>> f30d490fa1a4094009e3cc096313c04c970c8391
