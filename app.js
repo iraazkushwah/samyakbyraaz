@@ -96,6 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const docTaglineInput = document.getElementById('doc-tagline');
     const docSubtitleInput = document.getElementById('doc-subtitle');
     const docThemeInput = document.getElementById('doc-theme');
+    const coverThemeSelect = document.getElementById('cover-theme-select');
+    const coverBorderPatternSelect = document.getElementById('cover-border-pattern-select');
+    const coverEmblemSelect = document.getElementById('cover-emblem-select');
+    const docClassificationInput = document.getElementById('doc-classification');
+    const coverTitleSizeSlider = document.getElementById('cover-title-size');
+    const coverTitleSizeVal = document.getElementById('cover-title-size-val');
+    const coverClassificationSizeSlider = document.getElementById('cover-classification-size');
+    const coverClassificationSizeVal = document.getElementById('cover-classification-size-val');
+    const coverTaglineSizeSlider = document.getElementById('cover-tagline-size');
+    const coverTaglineSizeVal = document.getElementById('cover-tagline-size-val');
+    const coverSubtitleSizeSlider = document.getElementById('cover-subtitle-size');
+    const coverSubtitleSizeVal = document.getElementById('cover-subtitle-size-val');
 
     // Last page inputs
     const lastEditorZone = document.getElementById('last-editor-zone');
@@ -110,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearAllBtn = document.getElementById('clear-all-btn');
     const printPdfBtn = document.getElementById('print-pdf-btn');
     const smartShrinkBtn = document.getElementById('smart-shrink-btn');
+    const loadingOverlay = document.getElementById('loading-overlay');
     
     const zoomInBtn = document.getElementById('zoom-in');
     const zoomOutBtn = document.getElementById('zoom-out');
@@ -268,6 +281,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const designPageNumSize = document.getElementById('design-page-num-size');
     const designPageNumSizeVal = document.getElementById('design-page-num-size-val');
 
+    // Page margins and paddings inputs
+    const pageMarginXInput = document.getElementById('page-margin-x');
+    const marginXValSpan = document.getElementById('margin-x-val');
+    const pageMarginYInput = document.getElementById('page-margin-y');
+    const marginYValSpan = document.getElementById('margin-y-val');
+    const pagePaddingXInput = document.getElementById('page-padding-x');
+    const paddingXValSpan = document.getElementById('padding-x-val');
+    const pagePaddingYInput = document.getElementById('page-padding-y');
+    const paddingYValSpan = document.getElementById('padding-y-val');
+
     const headerLogoFileInput = document.getElementById('header-logo-file');
     const headerLogoPreviewGroup = document.getElementById('header-logo-preview-group');
     const headerLogoPreview = document.getElementById('header-logo-preview');
@@ -354,8 +377,15 @@ document.addEventListener('DOMContentLoaded', () => {
         endStarPulse: true,
         sectionShape: 'rectangle',
         topicIcon: 'orange-diamond',
-        bulletStyle: 'classic'
+        bulletStyle: 'classic',
+        
+        // Page Spacings Customizations
+        pageMarginX: '8',
+        pageMarginY: '6',
+        pagePaddingX: '6',
+        pagePaddingY: '4'
     };
+
 
     // 2.1 Social Settings State
     let socialSettings = {
@@ -632,17 +662,131 @@ document.addEventListener('DOMContentLoaded', () => {
         pageContentInput.addEventListener(evtType, () => syncPreviewScroll(false));
     });
 
-    // Live update when editing cover metadata
-    [docTitleInput, docTaglineInput, docSubtitleInput].forEach(input => {
+    // Live update when editing cover metadata (synchronous DOM preview update for instant feedback)
+    function syncCoverPreviewMetadata() {
+        const coverPage = pagesContainer.querySelector('.cover-page');
+        if (!coverPage) return;
+        
+        const titleEl = coverPage.querySelector('.cover-title');
+        if (titleEl) titleEl.textContent = docTitleInput.value;
+        
+        const taglineEl = coverPage.querySelector('.cover-tagline-box h3');
+        if (taglineEl) taglineEl.textContent = docTaglineInput.value;
+        
+        const subtitleEl = coverPage.querySelector('.cover-subtitle');
+        if (subtitleEl) subtitleEl.textContent = docSubtitleInput.value;
+        
+        const classificationEl = coverPage.querySelector('.cover-classification');
+        if (classificationEl) {
+            classificationEl.textContent = docClassificationInput.value;
+            if (!docClassificationInput.value) {
+                classificationEl.style.minHeight = '30px';
+            } else {
+                classificationEl.style.minHeight = '';
+            }
+        }
+    }
+
+    [docTitleInput, docTaglineInput, docSubtitleInput, docClassificationInput].forEach(input => {
         input.addEventListener('input', () => {
             if (activePageIndex === 0) {
                 pagesData[0].title = docTitleInput.value;
                 pagesData[0].tagline = docTaglineInput.value;
                 pagesData[0].subtitle = docSubtitleInput.value;
+                pagesData[0].classification = docClassificationInput.value;
+                syncCoverPreviewMetadata();
                 debouncedRenderAndSaveTyping();
             }
         });
     });
+
+    if (coverThemeSelect) {
+        coverThemeSelect.addEventListener('change', () => {
+            if (pagesData[0]) {
+                pagesData[0].coverTheme = coverThemeSelect.value;
+                debouncedRenderAndSaveTyping();
+            }
+        });
+    }
+
+    if (coverBorderPatternSelect) {
+        coverBorderPatternSelect.addEventListener('change', () => {
+            if (pagesData[0]) {
+                pagesData[0].coverBorderPattern = coverBorderPatternSelect.value;
+                debouncedRenderAndSave();
+            }
+        });
+    }
+
+    if (coverEmblemSelect) {
+        coverEmblemSelect.addEventListener('change', () => {
+            if (pagesData[0]) {
+                pagesData[0].coverEmblem = coverEmblemSelect.value;
+                debouncedRenderAndSave();
+            }
+        });
+    }
+
+    // Cover Typography Sizes change listeners (debounced rendering + synchronous DOM update for 60fps smoothness)
+    if (coverTitleSizeSlider) {
+        coverTitleSizeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            coverTitleSizeVal.textContent = `${val}px`;
+            if (pagesData[0]) {
+                pagesData[0].titleSize = val;
+                const targetEl = pagesContainer.querySelector('.cover-page .cover-title');
+                if (targetEl) {
+                    targetEl.style.fontSize = `${val}px`;
+                }
+                debouncedRenderAndSave();
+            }
+        });
+    }
+
+    if (coverClassificationSizeSlider) {
+        coverClassificationSizeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            coverClassificationSizeVal.textContent = `${val}px`;
+            if (pagesData[0]) {
+                pagesData[0].classificationSize = val;
+                const targetEl = pagesContainer.querySelector('.cover-page .cover-classification');
+                if (targetEl) {
+                    targetEl.style.fontSize = `${val}px`;
+                }
+                debouncedRenderAndSave();
+            }
+        });
+    }
+
+    if (coverTaglineSizeSlider) {
+        coverTaglineSizeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            coverTaglineSizeVal.textContent = `${val}px`;
+            if (pagesData[0]) {
+                pagesData[0].taglineSize = val;
+                const targetEl = pagesContainer.querySelector('.cover-page .cover-tagline-box h3');
+                if (targetEl) {
+                    targetEl.style.fontSize = `${val}px`;
+                }
+                debouncedRenderAndSave();
+            }
+        });
+    }
+
+    if (coverSubtitleSizeSlider) {
+        coverSubtitleSizeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            coverSubtitleSizeVal.textContent = `${val}px`;
+            if (pagesData[0]) {
+                pagesData[0].subtitleSize = val;
+                const targetEl = pagesContainer.querySelector('.cover-page .cover-subtitle');
+                if (targetEl) {
+                    targetEl.style.fontSize = `${val}px`;
+                }
+                debouncedRenderAndSave();
+            }
+        });
+    }
 
     // Live update when editing last page metadata
     [lastTitleInput, lastSubtitleInput, lastTaglineInput].forEach(input => {
@@ -1170,13 +1314,12 @@ document.addEventListener('DOMContentLoaded', () => {
         saveWorkspaceToLocalStorage();
     }
 
-    // Bind Social Settings inputs
+    // Bind Social Settings inputs (Debounced for lag-free typing performance)
     if (footerTelegramInput) {
         footerTelegramInput.addEventListener('input', () => {
             socialSettings.telegramText = footerTelegramInput.value;
             cachedMaxContentHeight = null; // Clear height cache
-            renderPreview();
-            saveWorkspaceToLocalStorage();
+            debouncedRenderAndSave();
         });
     }
 
@@ -1184,8 +1327,7 @@ document.addEventListener('DOMContentLoaded', () => {
         footerYoutubeInput.addEventListener('input', () => {
             socialSettings.youtubeText = footerYoutubeInput.value;
             cachedMaxContentHeight = null; // Clear height cache
-            renderPreview();
-            saveWorkspaceToLocalStorage();
+            debouncedRenderAndSave();
         });
     }
 
@@ -1195,8 +1337,7 @@ document.addEventListener('DOMContentLoaded', () => {
             socialSettings.fontSize = val;
             if (footerSocialSizeVal) footerSocialSizeVal.textContent = `${val}px`;
             cachedMaxContentHeight = null; // Clear height cache
-            renderPreview();
-            saveWorkspaceToLocalStorage();
+            debouncedRenderAndSave();
         });
     }
 
@@ -1418,6 +1559,40 @@ document.addEventListener('DOMContentLoaded', () => {
                             docTaglineInput.value = pagesData[0].tagline || '';
                             docSubtitleInput.value = pagesData[0].subtitle || '';
                             docThemeInput.value = pagesData[0].theme || 'maroon-gold';
+                            if (coverThemeSelect) {
+                                coverThemeSelect.value = pagesData[0].coverTheme || 'default';
+                            }
+                            if (coverBorderPatternSelect) {
+                                coverBorderPatternSelect.value = pagesData[0].coverBorderPattern || 'solid';
+                            }
+                            if (coverEmblemSelect) {
+                                coverEmblemSelect.value = pagesData[0].coverEmblem || 'none';
+                            }
+                            if (pagesData[0].classification === undefined) pagesData[0].classification = '';
+                            if (pagesData[0].titleSize === undefined) pagesData[0].titleSize = 52;
+                            if (pagesData[0].classificationSize === undefined) pagesData[0].classificationSize = 24;
+                            if (pagesData[0].taglineSize === undefined) pagesData[0].taglineSize = 20;
+                            if (pagesData[0].subtitleSize === undefined) pagesData[0].subtitleSize = 21;
+
+                            if (docClassificationInput) {
+                                docClassificationInput.value = pagesData[0].classification || '';
+                            }
+                            if (coverTitleSizeSlider) {
+                                coverTitleSizeSlider.value = pagesData[0].titleSize || 52;
+                                coverTitleSizeVal.textContent = `${coverTitleSizeSlider.value}px`;
+                            }
+                            if (coverClassificationSizeSlider) {
+                                coverClassificationSizeSlider.value = pagesData[0].classificationSize || 24;
+                                coverClassificationSizeVal.textContent = `${coverClassificationSizeSlider.value}px`;
+                            }
+                            if (coverTaglineSizeSlider) {
+                                coverTaglineSizeSlider.value = pagesData[0].taglineSize || 20;
+                                coverTaglineSizeVal.textContent = `${coverTaglineSizeSlider.value}px`;
+                            }
+                            if (coverSubtitleSizeSlider) {
+                                coverSubtitleSizeSlider.value = pagesData[0].subtitleSize || 21;
+                                coverSubtitleSizeVal.textContent = `${coverSubtitleSizeSlider.value}px`;
+                            }
                         }
                         if (lastPageData) {
                             lastTitleInput.value = lastPageData.title || 'THANK YOU';
@@ -1637,91 +1812,107 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!proceed) return;
             }
 
-            // Search candidates: subtle line-height adjustments first, then font-size decrements
-            const candidates = [];
-            
-            // 1. Try subtle line-height reductions on original font-size
-            for (let ls = originalLineSpacing - 0.03; ls >= 1.3; ls -= 0.03) {
-                candidates.push({ fs: originalFontSize, ls: Math.round(ls * 100) / 100 });
+            // Show premium loading overlay
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('active');
             }
 
-            // 2. Try smaller font-sizes in steps of 0.2px down to 11px
-            for (let fs = originalFontSize - 0.2; fs >= 11; fs -= 0.2) {
-                const roundedFs = Math.round(fs * 100) / 100;
-                candidates.push({ fs: roundedFs, ls: originalLineSpacing });
+            // Defer calculations slightly so browser has time to render/paint the loading screen first!
+            setTimeout(() => {
+                // Search candidates: subtle line-height adjustments first, then font-size decrements
+                const candidates = [];
                 
-                if (originalLineSpacing > 1.4) {
-                    candidates.push({ fs: roundedFs, ls: 1.4 });
+                // 1. Try subtle line-height reductions on original font-size
+                for (let ls = originalLineSpacing - 0.03; ls >= 1.3; ls -= 0.03) {
+                    candidates.push({ fs: originalFontSize, ls: Math.round(ls * 100) / 100 });
                 }
-                candidates.push({ fs: roundedFs, ls: 1.35 });
-                candidates.push({ fs: roundedFs, ls: 1.3 });
-            }
 
-            let success = false;
-            let bestFs = originalFontSize;
-            let bestLs = originalLineSpacing;
-
-            // Helper function to safely set spacing value in select control
-            const setSelectValue = (selectEl, val) => {
-                let optionExists = Array.from(selectEl.options).some(opt => parseFloat(opt.value) === val);
-                if (!optionExists) {
-                    const tempOpt = document.createElement('option');
-                    tempOpt.value = val.toString();
-                    tempOpt.textContent = `Custom (${val})`;
-                    tempOpt.id = 'temp-spacing-option';
-                    selectEl.appendChild(tempOpt);
-                }
-                selectEl.value = val.toString();
-            };
-
-            // Run iterations
-            for (const candidate of candidates) {
-                contentFontSize = candidate.fs;
-                setSelectValue(globalLineSpacingSelect, candidate.ls);
-                
-                document.documentElement.style.setProperty('--content-font-size', `${contentFontSize}px`);
-                document.documentElement.style.setProperty('--content-line-height', candidate.ls.toString());
-                cachedMaxContentHeight = null; // force recalculate heights
-                
-                renderPreview();
-
-                if (pagesData.length < originalPageCount) {
-                    success = true;
-                    bestFs = candidate.fs;
-                    bestLs = candidate.ls;
-                    break;
-                }
-            }
-
-            // Clear any unused temporary options from select dropdown
-            const cleanTempOptions = (selectEl, activeVal) => {
-                Array.from(selectEl.options).forEach(opt => {
-                    if (opt.id === 'temp-spacing-option' && parseFloat(opt.value) !== activeVal) {
-                        selectEl.removeChild(opt);
+                // 2. Try smaller font-sizes in steps of 0.2px down to 13px
+                for (let fs = originalFontSize - 0.2; fs >= 13; fs -= 0.2) {
+                    const roundedFs = Math.round(fs * 100) / 100;
+                    candidates.push({ fs: roundedFs, ls: originalLineSpacing });
+                    
+                    if (originalLineSpacing > 1.4) {
+                        candidates.push({ fs: roundedFs, ls: 1.4 });
                     }
-                });
-            };
+                    candidates.push({ fs: roundedFs, ls: 1.35 });
+                    candidates.push({ fs: roundedFs, ls: 1.3 });
+                }
 
-            if (success) {
-                fontSizeValSpan.textContent = `${bestFs}px`;
-                cleanTempOptions(globalLineSpacingSelect, bestLs);
-                renderPreview();
-                saveWorkspaceToLocalStorage();
-                alert(`🪄 Smart Shrink was successful!\n\nPages: ${originalPageCount} -> ${pagesData.length}\nFont Size: ${bestFs}px\nLine Spacing: ${bestLs}`);
-            } else {
-                // Restore original settings
-                contentFontSize = originalFontSize;
-                setSelectValue(globalLineSpacingSelect, originalLineSpacing);
-                cleanTempOptions(globalLineSpacingSelect, originalLineSpacing);
-                
-                document.documentElement.style.setProperty('--content-font-size', `${originalFontSize}px`);
-                document.documentElement.style.setProperty('--content-line-height', originalLineSpacing.toString());
-                fontSizeValSpan.textContent = `${originalFontSize}px`;
-                cachedMaxContentHeight = null;
-                
-                renderPreview();
-                alert("Attempted, but could not fit the content onto the previous pages without shrinking the font size below 11px.");
-            }
+                let success = false;
+                let bestFs = originalFontSize;
+                let bestLs = originalLineSpacing;
+
+                // Helper function to safely set spacing value in select control
+                const setSelectValue = (selectEl, val) => {
+                    let optionExists = Array.from(selectEl.options).some(opt => parseFloat(opt.value) === val);
+                    if (!optionExists) {
+                        const tempOpt = document.createElement('option');
+                        tempOpt.value = val.toString();
+                        tempOpt.textContent = `Custom (${val})`;
+                        tempOpt.id = 'temp-spacing-option';
+                        selectEl.appendChild(tempOpt);
+                    }
+                    selectEl.value = val.toString();
+                };
+
+                // Run iterations
+                for (const candidate of candidates) {
+                    contentFontSize = candidate.fs;
+                    setSelectValue(globalLineSpacingSelect, candidate.ls);
+                    
+                    document.documentElement.style.setProperty('--content-font-size', `${contentFontSize}px`);
+                    document.documentElement.style.setProperty('--content-line-height', candidate.ls.toString());
+                    cachedMaxContentHeight = null; // force recalculate heights
+                    
+                    renderPreview();
+
+                    if (pagesData.length < originalPageCount) {
+                        success = true;
+                        bestFs = candidate.fs;
+                        bestLs = candidate.ls;
+                        break;
+                    }
+                }
+
+                // Clear any unused temporary options from select dropdown
+                const cleanTempOptions = (selectEl, activeVal) => {
+                    Array.from(selectEl.options).forEach(opt => {
+                        if (opt.id === 'temp-spacing-option' && parseFloat(opt.value) !== activeVal) {
+                            selectEl.removeChild(opt);
+                        }
+                    });
+                };
+
+                // Hide loading overlay
+                if (loadingOverlay) {
+                    loadingOverlay.classList.remove('active');
+                }
+
+                // Delay alert slightly to let DOM hide the loading screen and repaint first
+                setTimeout(() => {
+                    if (success) {
+                        fontSizeValSpan.textContent = `${bestFs}px`;
+                        cleanTempOptions(globalLineSpacingSelect, bestLs);
+                        renderPreview();
+                        saveWorkspaceToLocalStorage();
+                        alert(`🪄 Smart Shrink was successful!\n\nPages: ${originalPageCount} -> ${pagesData.length}\nFont Size: ${bestFs}px\nLine Spacing: ${bestLs}`);
+                    } else {
+                        // Restore original settings
+                        contentFontSize = originalFontSize;
+                        setSelectValue(globalLineSpacingSelect, originalLineSpacing);
+                        cleanTempOptions(globalLineSpacingSelect, originalLineSpacing);
+                        
+                        document.documentElement.style.setProperty('--content-font-size', `${originalFontSize}px`);
+                        document.documentElement.style.setProperty('--content-line-height', originalLineSpacing.toString());
+                        fontSizeValSpan.textContent = `${originalFontSize}px`;
+                        cachedMaxContentHeight = null;
+                        
+                        renderPreview();
+                        alert("Attempted, but could not fit the content onto the previous pages without shrinking the font size below 13px.");
+                    }
+                }, 60);
+            }, 80);
         });
     }
 
@@ -2059,14 +2250,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     watermarkTextInput.addEventListener('input', () => {
         watermarkSettings.text = watermarkTextInput.value;
-        renderPreview();
-        saveWorkspaceToLocalStorage();
+        debouncedRenderAndSave();
     });
 
     watermarkColorInput.addEventListener('input', () => {
         watermarkSettings.color = watermarkColorInput.value;
-        renderPreview();
-        saveWorkspaceToLocalStorage();
+        debouncedRenderAndSave();
     });
 
     watermarkPositionSelect.addEventListener('change', () => {
@@ -2085,16 +2274,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const val = watermarkOpacitySlider.value;
         watermarkOpacityVal.textContent = `${val}%`;
         watermarkSettings.opacity = val / 100;
-        renderPreview();
-        saveWorkspaceToLocalStorage();
+        debouncedRenderAndSave();
     });
 
     watermarkSizeSlider.addEventListener('input', () => {
         const val = watermarkSizeSlider.value;
         watermarkSettings.size = parseInt(val);
         updateWatermarkSizeLabel();
-        renderPreview();
-        saveWorkspaceToLocalStorage();
+        debouncedRenderAndSave();
     });
 
     watermarkImageFileInput.addEventListener('change', (e) => {
@@ -2237,6 +2424,44 @@ document.addEventListener('DOMContentLoaded', () => {
         saveWorkspaceToLocalStorage();
     });
 
+    // Page Spacing Customizers (Margins & Padding)
+    if (pageMarginXInput) {
+        pageMarginXInput.addEventListener('input', (e) => {
+            customDesignSettings.pageMarginX = e.target.value;
+            if (marginXValSpan) marginXValSpan.textContent = `${e.target.value}mm`;
+            document.documentElement.style.setProperty('--custom-page-margin-x', `${e.target.value}mm`);
+            cachedMaxContentHeight = null; // Clear height cache to trigger re-measurement
+            debouncedRenderAndSave();
+        });
+    }
+    if (pageMarginYInput) {
+        pageMarginYInput.addEventListener('input', (e) => {
+            customDesignSettings.pageMarginY = e.target.value;
+            if (marginYValSpan) marginYValSpan.textContent = `${e.target.value}mm`;
+            document.documentElement.style.setProperty('--custom-page-margin-y', `${e.target.value}mm`);
+            cachedMaxContentHeight = null; // Clear height cache to trigger re-measurement
+            debouncedRenderAndSave();
+        });
+    }
+    if (pagePaddingXInput) {
+        pagePaddingXInput.addEventListener('input', (e) => {
+            customDesignSettings.pagePaddingX = e.target.value;
+            if (paddingXValSpan) paddingXValSpan.textContent = `${e.target.value}mm`;
+            document.documentElement.style.setProperty('--custom-page-padding-x', `${e.target.value}mm`);
+            cachedMaxContentHeight = null; // Clear height cache to trigger re-measurement
+            debouncedRenderAndSave();
+        });
+    }
+    if (pagePaddingYInput) {
+        pagePaddingYInput.addEventListener('input', (e) => {
+            customDesignSettings.pagePaddingY = e.target.value;
+            if (paddingYValSpan) paddingYValSpan.textContent = `${e.target.value}mm`;
+            document.documentElement.style.setProperty('--custom-page-padding-y', `${e.target.value}mm`);
+            cachedMaxContentHeight = null; // Clear height cache to trigger re-measurement
+            debouncedRenderAndSave();
+        });
+    }
+
     // Group 3.5: Two-Column Divider Customizer
     designDividerColor.addEventListener('input', (e) => {
         customDesignSettings.dividerColor = e.target.value;
@@ -2288,8 +2513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     designPageNumColor.addEventListener('input', (e) => {
         customDesignSettings.pageNumColor = e.target.value;
         cachedMaxContentHeight = null; // Clear height cache
-        renderPreview();
-        saveWorkspaceToLocalStorage();
+        debouncedRenderAndSave();
     });
     designPageNumPlace.addEventListener('change', (e) => {
         customDesignSettings.pageNumPlacement = e.target.value;
@@ -2300,15 +2524,13 @@ document.addEventListener('DOMContentLoaded', () => {
     designPageNumPrefix.addEventListener('input', (e) => {
         customDesignSettings.pageNumPrefix = e.target.value;
         cachedMaxContentHeight = null; // Clear height cache
-        renderPreview();
-        saveWorkspaceToLocalStorage();
+        debouncedRenderAndSave();
     });
     designPageNumSize.addEventListener('input', (e) => {
         designPageNumSizeVal.textContent = `${e.target.value}px`;
         customDesignSettings.pageNumSize = e.target.value;
         cachedMaxContentHeight = null; // Clear height cache
-        renderPreview();
-        saveWorkspaceToLocalStorage();
+        debouncedRenderAndSave();
     });
 
     headerLogoFileInput.addEventListener('change', (e) => {
@@ -2379,6 +2601,21 @@ document.addEventListener('DOMContentLoaded', () => {
             pagesData[0].title = docTitleInput.value;
             pagesData[0].tagline = docTaglineInput.value;
             pagesData[0].subtitle = docSubtitleInput.value;
+            if (docClassificationInput) {
+                pagesData[0].classification = docClassificationInput.value;
+            }
+            if (coverTitleSizeSlider) {
+                pagesData[0].titleSize = parseInt(coverTitleSizeSlider.value) || 52;
+            }
+            if (coverClassificationSizeSlider) {
+                pagesData[0].classificationSize = parseInt(coverClassificationSizeSlider.value) || 24;
+            }
+            if (coverTaglineSizeSlider) {
+                pagesData[0].taglineSize = parseInt(coverTaglineSizeSlider.value) || 20;
+            }
+            if (coverSubtitleSizeSlider) {
+                pagesData[0].subtitleSize = parseInt(coverSubtitleSizeSlider.value) || 21;
+            }
         } else if (activePageIndex === pagesData.length) {
             lastPageData.title = lastTitleInput.value;
             lastPageData.subtitle = lastSubtitleInput.value;
@@ -2441,6 +2678,34 @@ document.addEventListener('DOMContentLoaded', () => {
             docTitleInput.value = pagesData[0].title;
             docTaglineInput.value = pagesData[0].tagline;
             docSubtitleInput.value = pagesData[0].subtitle;
+            if (coverThemeSelect) {
+                coverThemeSelect.value = pagesData[0].coverTheme || 'default';
+            }
+            if (coverBorderPatternSelect) {
+                coverBorderPatternSelect.value = pagesData[0].coverBorderPattern || 'solid';
+            }
+            if (coverEmblemSelect) {
+                coverEmblemSelect.value = pagesData[0].coverEmblem || 'none';
+            }
+            if (docClassificationInput) {
+                docClassificationInput.value = pagesData[0].classification || '';
+            }
+            if (coverTitleSizeSlider) {
+                coverTitleSizeSlider.value = pagesData[0].titleSize || 52;
+                coverTitleSizeVal.textContent = `${coverTitleSizeSlider.value}px`;
+            }
+            if (coverClassificationSizeSlider) {
+                coverClassificationSizeSlider.value = pagesData[0].classificationSize || 24;
+                coverClassificationSizeVal.textContent = `${coverClassificationSizeSlider.value}px`;
+            }
+            if (coverTaglineSizeSlider) {
+                coverTaglineSizeSlider.value = pagesData[0].taglineSize || 20;
+                coverTaglineSizeVal.textContent = `${coverTaglineSizeSlider.value}px`;
+            }
+            if (coverSubtitleSizeSlider) {
+                coverSubtitleSizeSlider.value = pagesData[0].subtitleSize || 21;
+                coverSubtitleSizeVal.textContent = `${coverSubtitleSizeSlider.value}px`;
+            }
             applyTheme(pagesData[0].theme);
         } else if (index === lastTabIdx) {
             // Display Last Page controls
@@ -3429,7 +3694,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic page numbering and header styling helper
     function applyPaginationStyling(pageNumText, pageNum) {
         pageNumText.textContent = pageNum;
-        pageNumText.style.fontSize = `${customDesignSettings.pageNumSize}px`;
+        pageNumText.style.fontSize = 'var(--custom-header-font-size, 15px)';
         pageNumText.style.color = customDesignSettings.pageNumColor || '#000000';
     }
 
@@ -3921,6 +4186,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const page = document.createElement('div');
         page.className = 'a4-page cover-page';
+        if (coverData.coverTheme && coverData.coverTheme !== 'default') {
+            page.classList.add(`cover-theme-${coverData.coverTheme}`);
+        }
         page.setAttribute('data-page', 1);
 
         // Append corner decorators
@@ -3928,32 +4196,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const innerBorder = document.createElement('div');
         innerBorder.className = 'inner-border-wrapper';
+        innerBorder.classList.add(`cover-border-${coverData.coverBorderPattern || 'solid'}`);
 
         const coverContent = document.createElement('div');
         coverContent.className = 'cover-page-content';
+
+        // Emblem (Feature 2)
+        let emblemEl = null;
+        if (coverData.coverEmblem && coverData.coverEmblem !== 'none') {
+            emblemEl = document.createElement('div');
+            emblemEl.className = `cover-emblem cover-emblem-${coverData.coverEmblem}`;
+            if (coverData.coverEmblem === 'royal-seal') {
+                emblemEl.innerHTML = '<div class="seal-inner"><span class="seal-icon">⚜️</span><span class="seal-text">सम्यक विशेष</span></div>';
+            } else if (coverData.coverEmblem === 'verified-badge') {
+                emblemEl.innerHTML = '<div class="badge-inner"><span class="badge-icon">✓</span><span class="badge-text">प्रमाणित नोट्स</span></div>';
+            } else if (coverData.coverEmblem === 'exclusive-star') {
+                emblemEl.innerHTML = '<div class="star-inner"><span class="star-icon">★</span><span class="star-text">EXCLUSIVE</span></div>';
+            } else if (coverData.coverEmblem === 'vintage-emblem') {
+                emblemEl.innerHTML = '<div class="vintage-inner"><span class="vintage-icon">🖨️</span><span class="vintage-text">ESTD 2026</span></div>';
+            }
+        }
+
+        // Magazine Classification
+        const classificationEl = document.createElement('div');
+        classificationEl.className = 'cover-classification';
+        classificationEl.textContent = coverData.classification || '';
+        classificationEl.style.setProperty('font-size', (coverData.classificationSize || 24) + 'px', 'important');
+        if (!coverData.classification) {
+            classificationEl.style.minHeight = '30px';
+        }
 
         // Title
         const titleEl = document.createElement('h1');
         titleEl.className = 'cover-title';
         titleEl.textContent = coverData.title;
+        titleEl.style.setProperty('font-size', (coverData.titleSize || 52) + 'px', 'important');
 
         // Tagline Box
         const taglineBox = document.createElement('div');
         taglineBox.className = 'cover-tagline-box';
         const taglineH3 = document.createElement('h3');
         taglineH3.textContent = coverData.tagline;
+        taglineH3.style.setProperty('font-size', (coverData.taglineSize || 20) + 'px', 'important');
         taglineBox.appendChild(taglineH3);
 
         // Subtitle
         const subtitleEl = document.createElement('h2');
         subtitleEl.className = 'cover-subtitle';
         subtitleEl.textContent = coverData.subtitle;
+        subtitleEl.style.setProperty('font-size', (coverData.subtitleSize || 21) + 'px', 'important');
 
         // Table of Contents Placeholder
         const tocPlaceholder = document.createElement('div');
         tocPlaceholder.id = 'toc-placeholder';
         tocPlaceholder.className = 'toc-container';
 
+        if (emblemEl) {
+            coverContent.appendChild(emblemEl);
+        }
+        coverContent.appendChild(classificationEl);
         coverContent.appendChild(titleEl);
         coverContent.appendChild(taglineBox);
         coverContent.appendChild(subtitleEl);
@@ -4376,6 +4677,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyCustomDesignSettingsToDOM() {
         cachedMaxContentHeight = null; // Clear height cache
+        document.documentElement.style.setProperty('--custom-header-font-size', `${customDesignSettings.pageNumSize || 15}px`);
         // Direct CSS properties update
         document.documentElement.style.setProperty('--custom-section-bg', customDesignSettings.sectionBg || 'var(--primary-color)');
         document.documentElement.style.setProperty('--custom-section-border-left', customDesignSettings.sectionAccent || 'var(--accent-color)');
@@ -4417,6 +4719,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.style.setProperty('--custom-divider-color', customDesignSettings.dividerColor || 'var(--secondary-color)');
         document.documentElement.style.setProperty('--custom-divider-style', customDesignSettings.dividerStyle || 'dashed');
         document.documentElement.style.setProperty('--custom-divider-thickness', `${customDesignSettings.dividerThickness || 1.5}px`);
+
+        // Page margins and paddings variables update
+        document.documentElement.style.setProperty('--custom-page-margin-x', `${customDesignSettings.pageMarginX || 8}mm`);
+        document.documentElement.style.setProperty('--custom-page-margin-y', `${customDesignSettings.pageMarginY || 6}mm`);
+        document.documentElement.style.setProperty('--custom-page-padding-x', `${customDesignSettings.pagePaddingX || 6}mm`);
+        document.documentElement.style.setProperty('--custom-page-padding-y', `${customDesignSettings.pagePaddingY || 4}mm`);
 
         // End star divider variables
         const esc = customDesignSettings.endStarColor || 'var(--secondary-color)';
@@ -4478,6 +4786,24 @@ document.addEventListener('DOMContentLoaded', () => {
         designPageNumPrefix.value = customDesignSettings.pageNumPrefix || 'पेज - ';
         designPageNumSize.value = customDesignSettings.pageNumSize || '15';
         designPageNumSizeVal.textContent = `${customDesignSettings.pageNumSize || 15}px`;
+
+        // Sync page margins and paddings UI inputs
+        if (pageMarginXInput) {
+            pageMarginXInput.value = customDesignSettings.pageMarginX || '8';
+            if (marginXValSpan) marginXValSpan.textContent = `${customDesignSettings.pageMarginX || 8}mm`;
+        }
+        if (pageMarginYInput) {
+            pageMarginYInput.value = customDesignSettings.pageMarginY || '6';
+            if (marginYValSpan) marginYValSpan.textContent = `${customDesignSettings.pageMarginY || 6}mm`;
+        }
+        if (pagePaddingXInput) {
+            pagePaddingXInput.value = customDesignSettings.pagePaddingX || '6';
+            if (paddingXValSpan) paddingXValSpan.textContent = `${customDesignSettings.pagePaddingX || 6}mm`;
+        }
+        if (pagePaddingYInput) {
+            pagePaddingYInput.value = customDesignSettings.pagePaddingY || '4';
+            if (paddingYValSpan) paddingYValSpan.textContent = `${customDesignSettings.pagePaddingY || 4}mm`;
+        }
 
         if (designSectionShape) {
             designSectionShape.value = customDesignSettings.sectionShape || 'rectangle';
@@ -4543,6 +4869,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (customDesignSettings.bulletStyle === undefined) {
                         customDesignSettings.bulletStyle = 'classic';
                     }
+                    if (customDesignSettings.pageMarginX === undefined) {
+                        customDesignSettings.pageMarginX = '8';
+                    }
+                    if (customDesignSettings.pageMarginY === undefined) {
+                        customDesignSettings.pageMarginY = '6';
+                    }
+                    if (customDesignSettings.pagePaddingX === undefined) {
+                        customDesignSettings.pagePaddingX = '6';
+                    }
+                    if (customDesignSettings.pagePaddingY === undefined) {
+                        customDesignSettings.pagePaddingY = '4';
+                    }
                     socialSettings = state.socialSettings || { telegramText: '', youtubeText: '' };
                     if (socialSettings.telegramText === '@samyak') socialSettings.telegramText = '';
                     if (socialSettings.youtubeText === 'Samyak Coaching') socialSettings.youtubeText = '';
@@ -4561,6 +4899,40 @@ document.addEventListener('DOMContentLoaded', () => {
                         docTaglineInput.value = pagesData[0].tagline || '';
                         docSubtitleInput.value = pagesData[0].subtitle || '';
                         docThemeInput.value = pagesData[0].theme || 'maroon-gold';
+                        if (coverThemeSelect) {
+                            coverThemeSelect.value = pagesData[0].coverTheme || 'default';
+                        }
+                        if (coverBorderPatternSelect) {
+                            coverBorderPatternSelect.value = pagesData[0].coverBorderPattern || 'solid';
+                        }
+                        if (coverEmblemSelect) {
+                            coverEmblemSelect.value = pagesData[0].coverEmblem || 'none';
+                        }
+                        if (pagesData[0].classification === undefined) pagesData[0].classification = '';
+                        if (pagesData[0].titleSize === undefined) pagesData[0].titleSize = 52;
+                        if (pagesData[0].classificationSize === undefined) pagesData[0].classificationSize = 24;
+                        if (pagesData[0].taglineSize === undefined) pagesData[0].taglineSize = 20;
+                        if (pagesData[0].subtitleSize === undefined) pagesData[0].subtitleSize = 21;
+
+                        if (docClassificationInput) {
+                            docClassificationInput.value = pagesData[0].classification || '';
+                        }
+                        if (coverTitleSizeSlider) {
+                            coverTitleSizeSlider.value = pagesData[0].titleSize || 52;
+                            coverTitleSizeVal.textContent = `${coverTitleSizeSlider.value}px`;
+                        }
+                        if (coverClassificationSizeSlider) {
+                            coverClassificationSizeSlider.value = pagesData[0].classificationSize || 24;
+                            coverClassificationSizeVal.textContent = `${coverClassificationSizeSlider.value}px`;
+                        }
+                        if (coverTaglineSizeSlider) {
+                            coverTaglineSizeSlider.value = pagesData[0].taglineSize || 20;
+                            coverTaglineSizeVal.textContent = `${coverTaglineSizeSlider.value}px`;
+                        }
+                        if (coverSubtitleSizeSlider) {
+                            coverSubtitleSizeSlider.value = pagesData[0].subtitleSize || 21;
+                            coverSubtitleSizeVal.textContent = `${coverSubtitleSizeSlider.value}px`;
+                        }
                     }
                     if (lastPageData) {
                         lastTitleInput.value = lastPageData.title || 'THANK YOU';
@@ -4647,7 +5019,15 @@ document.addEventListener('DOMContentLoaded', () => {
             title: '',
             tagline: '',
             subtitle: '',
-            theme: activeTheme
+            theme: activeTheme,
+            coverTheme: 'default',
+            coverBorderPattern: 'solid',
+            coverEmblem: 'none',
+            classification: '',
+            titleSize: 52,
+            classificationSize: 24,
+            taglineSize: 20,
+            subtitleSize: 21
         };
         currentCover.theme = activeTheme;
 
@@ -4668,6 +5048,25 @@ document.addEventListener('DOMContentLoaded', () => {
         docTitleInput.value = pagesData[0].title;
         docTaglineInput.value = pagesData[0].tagline;
         docSubtitleInput.value = pagesData[0].subtitle;
+        if (docClassificationInput) {
+            docClassificationInput.value = '';
+        }
+        if (coverTitleSizeSlider) {
+            coverTitleSizeSlider.value = 52;
+            coverTitleSizeVal.textContent = '52px';
+        }
+        if (coverClassificationSizeSlider) {
+            coverClassificationSizeSlider.value = 24;
+            coverClassificationSizeVal.textContent = '24px';
+        }
+        if (coverTaglineSizeSlider) {
+            coverTaglineSizeSlider.value = 20;
+            coverTaglineSizeVal.textContent = '20px';
+        }
+        if (coverSubtitleSizeSlider) {
+            coverSubtitleSizeSlider.value = 21;
+            coverSubtitleSizeVal.textContent = '21px';
+        }
         
         // Keep user's active theme preserved and trigger change event to sync searchable custom select & save
         docThemeInput.value = activeTheme;
@@ -4691,7 +5090,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: '',
                 tagline: '',
                 subtitle: '',
-                theme: 'maroon-gold'
+                theme: 'maroon-gold',
+                coverTheme: 'default',
+                coverBorderPattern: 'solid',
+                coverEmblem: 'none',
+                classification: '',
+                titleSize: 52,
+                classificationSize: 24,
+                taglineSize: 20,
+                subtitleSize: 21
             },
             
             // Page 2 (Idx 1)

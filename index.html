@@ -194,6 +194,76 @@
                                     <label for="doc-subtitle">Subtitle / Date</label>
                                     <input type="text" id="doc-subtitle" value="">
                                 </div>
+                                <div class="input-group full-width">
+                                    <label for="doc-classification">Magazine Classification (पत्रिका वर्गीकरण)</label>
+                                    <input type="text" id="doc-classification" value="">
+                                </div>
+                                <div class="input-group full-width">
+                                    <label for="cover-theme-select"><span class="opt-icon">🎨</span> Premium Cover Theme</label>
+                                    <select id="cover-theme-select" class="opt-select">
+                                         <option value="default">Default Theme (Global Sync)</option>
+                                         <option value="royal-rajwadi">👑 Royal Rajwadi Gold (शाही राजवाड़ी)</option>
+                                         <option value="obsidian-gothic">🖤 Obsidian Neo-Gothic (ऑब्सिडियन नव-गॉथिक)</option>
+                                         <option value="emerald-palace">💚 Maharaja Emerald Palace (महाराजा मरकत महल)</option>
+                                         <option value="vedic-ashram">🧡 Vedic Ashram Classic (वैदिक आश्रम)</option>
+                                         <option value="modern-editorial">📰 Modern Magazine Editorial (संपादकीय पत्रिका)</option>
+                                    </select>
+                                </div>
+                                <div class="input-group full-width">
+                                    <label for="cover-border-pattern-select"><span class="opt-icon">🖼️</span> Cover Border Pattern (कवर बॉर्डर पैटर्न)</label>
+                                    <select id="cover-border-pattern-select" class="opt-select">
+                                         <option value="solid">Solid Line (साधारण रेखा)</option>
+                                         <option value="double-gold">Royal Double Gold (शाही स्वर्ण दोहरी रेखा)</option>
+                                         <option value="dots">Dotted Border (बिंदु रेखा)</option>
+                                         <option value="ornate-frame">Ornate Double Frame (अलंकृत दोहरी फ़्रेम)</option>
+                                         <option value="none">No Border (कोई सीमा रेखा नहीं)</option>
+                                    </select>
+                                </div>
+                                <div class="input-group full-width">
+                                    <label for="cover-emblem-select"><span class="opt-icon">⚜️</span> Cover Title Emblem (कवर शीर्षक राजमुद्रा)</label>
+                                    <select id="cover-emblem-select" class="opt-select">
+                                         <option value="none">No Emblem (कोई राजमुद्रा नहीं)</option>
+                                         <option value="royal-seal">Royal Gold Seal (शाही स्वर्ण राजमुद्रा)</option>
+                                         <option value="verified-badge">Verified Quality Badge (प्रमाणित योग्यता बैज)</option>
+                                         <option value="exclusive-star">Samyak Exclusive Emblem (सम्यक विशेष स्टार)</option>
+                                         <option value="vintage-emblem">Vintage Editorial Seal (विंटेज संपादकीय सील)</option>
+                                    </select>
+                                </div>
+                                <div class="cover-font-sizes-group">
+                                    <h4 class="settings-subheading">Cover Typography Sizes (कवर फ़ॉन्ट आकार)</h4>
+                                    <div class="input-grid-2">
+                                        <div class="input-group">
+                                            <label for="cover-title-size">Title Size (शीर्षक आकार)</label>
+                                            <div class="slider-with-val">
+                                                <input type="range" id="cover-title-size" min="30" max="100" value="52">
+                                                <span id="cover-title-size-val">52px</span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="cover-classification-size">Class. Size (वर्गीकरण आकार)</label>
+                                            <div class="slider-with-val">
+                                                <input type="range" id="cover-classification-size" min="14" max="60" value="24">
+                                                <span id="cover-classification-size-val">24px</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-grid-2">
+                                        <div class="input-group">
+                                            <label for="cover-tagline-size">Tagline Size (टैगलाइन आकार)</label>
+                                            <div class="slider-with-val">
+                                                <input type="range" id="cover-tagline-size" min="12" max="40" value="20">
+                                                <span id="cover-tagline-size-val">20px</span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="cover-subtitle-size">Subtitle Size (उपशीर्षक आकार)</label>
+                                            <div class="slider-with-val">
+                                                <input type="range" id="cover-subtitle-size" min="12" max="45" value="21">
+                                                <span id="cover-subtitle-size-val">21px</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="cover-editor-helper">
                                 <p>💡 <strong>Cover Page Note:</strong> Cover Page ki table of contents (विषयवस्तु) baaki pages me likhe gaye main headers (# Section) ko scan karke automatic generate and update hogi.</p>
@@ -301,6 +371,29 @@
                                         </select>
                                         <button id="apply-layout-all-btn" class="search-action-btn" style="font-size: 9px; padding: 6px 8px; border-radius: var(--border-radius-sm); white-space: nowrap;" title="Apply this layout to all content pages">Apply to All</button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 📐 Page Margins & Spacing -->
+                        <div class="global-page-options" style="margin-top: 15px;">
+                            <h4 class="options-group-title">📐 Page Margins & Padding</h4>
+                            <div class="options-grid">
+                                <div class="option-item">
+                                    <label><span class="opt-icon">↔️</span> Outer Left/Right Margin (<span id="margin-x-val">8mm</span>):</label>
+                                    <input type="range" id="page-margin-x" min="2" max="15" value="8" step="0.5" style="width: 100%; accent-color: var(--ui-accent);">
+                                </div>
+                                <div class="option-item">
+                                    <label><span class="opt-icon">↕️</span> Outer Top/Bottom Margin (<span id="margin-y-val">6mm</span>):</label>
+                                    <input type="range" id="page-margin-y" min="2" max="15" value="6" step="0.5" style="width: 100%; accent-color: var(--ui-accent);">
+                                </div>
+                                <div class="option-item">
+                                    <label><span class="opt-icon">↔️</span> Inner Left/Right Padding (<span id="padding-x-val">6mm</span>):</label>
+                                    <input type="range" id="page-padding-x" min="2" max="15" value="6" step="0.5" style="width: 100%; accent-color: var(--ui-accent);">
+                                </div>
+                                <div class="option-item">
+                                    <label><span class="opt-icon">↕️</span> Inner Top/Bottom Padding (<span id="padding-y-val">4mm</span>):</label>
+                                    <input type="range" id="page-padding-y" min="2" max="15" value="4" step="0.5" style="width: 100%; accent-color: var(--ui-accent);">
                                 </div>
                             </div>
                         </div>
@@ -1030,21 +1123,19 @@
                              </div>
                          </div>
                     </div>
-                    <div class="raaz-qualities-section">
-                         <h4>🌟 Key Qualities & Skills</h4>
-                         <div class="raaz-qualities-tags">
-                             <span class="raaz-tag">Creative Frontend Developer</span>
-                             <span class="raaz-tag">UI/UX Specialist</span>
-                             <span class="raaz-tag">Problem Solver</span>
-                             <span class="raaz-tag">Samyak Architect</span>
-                             <span class="raaz-tag">Tech Enthusiast</span>
-                         </div>
-                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" id="close-raaz-btn" class="btn btn-secondary" style="width: 100%; justify-content: center;">Close Profile</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Premium Layout Optimizer Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner-container">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">🪄 Optimizing Layout (स्मार्ट श्रिंक)...</div>
         </div>
     </div>
 

@@ -71,6 +71,12 @@
     --custom-divider-thickness: 1.5px;
     --custom-divider-style: dashed;
     --custom-divider-color: var(--secondary-color);
+
+    /* PAGE MARGINS & PADDING CUSTOMIZATIONS */
+    --custom-page-margin-x: 8mm;
+    --custom-page-margin-y: 6mm;
+    --custom-page-padding-x: 6mm;
+    --custom-page-padding-y: 4mm;
 }
 
 /* Theme overrides */
@@ -1822,12 +1828,12 @@ body.light-mode .header-stats {
 /* Inner Gold Border container enclosing all text elements */
 .inner-border-wrapper {
     position: absolute;
-    top: 6mm;
-    bottom: 6mm;
-    left: 8mm;
-    right: 8mm;
+    top: var(--custom-page-margin-y, 6mm);
+    bottom: var(--custom-page-margin-y, 6mm);
+    left: var(--custom-page-margin-x, 8mm);
+    right: var(--custom-page-margin-x, 8mm);
     border: var(--custom-inner-border-thickness) solid var(--custom-inner-border-color); /* Dynamically customized inner border */
-    padding: 4mm 6mm 6mm 6mm; /* Core internal margins matching insta.txt padding */
+    padding: var(--custom-page-padding-y, 4mm) var(--custom-page-padding-x, 6mm) var(--custom-page-padding-y, 4mm) var(--custom-page-padding-x, 6mm); /* Core internal margins */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -1852,26 +1858,26 @@ body.light-mode .header-stats {
     transition: var(--transition-smooth);
 }
 .top-left {
-    top: 5mm;
-    left: 7mm;
+    top: calc(var(--custom-page-margin-y, 6mm) - 1mm);
+    left: calc(var(--custom-page-margin-x, 8mm) - 1mm);
     border-top-width: calc(3 * var(--custom-inner-border-thickness)) !important;
     border-left-width: calc(3 * var(--custom-inner-border-thickness)) !important;
 }
 .top-right {
-    top: 5mm;
-    right: 7mm;
+    top: calc(var(--custom-page-margin-y, 6mm) - 1mm);
+    right: calc(var(--custom-page-margin-x, 8mm) - 1mm);
     border-top-width: calc(3 * var(--custom-inner-border-thickness)) !important;
     border-right-width: calc(3 * var(--custom-inner-border-thickness)) !important;
 }
 .bottom-left {
-    bottom: 5mm;
-    left: 7mm;
+    bottom: calc(var(--custom-page-margin-y, 6mm) - 1mm);
+    left: calc(var(--custom-page-margin-x, 8mm) - 1mm);
     border-bottom-width: calc(3 * var(--custom-inner-border-thickness)) !important;
     border-left-width: calc(3 * var(--custom-inner-border-thickness)) !important;
 }
 .bottom-right {
-    bottom: 5mm;
-    right: 7mm;
+    bottom: calc(var(--custom-page-margin-y, 6mm) - 1mm);
+    right: calc(var(--custom-page-margin-x, 8mm) - 1mm);
     border-bottom-width: calc(3 * var(--custom-inner-border-thickness)) !important;
     border-right-width: calc(3 * var(--custom-inner-border-thickness)) !important;
 }
@@ -1884,25 +1890,26 @@ body.light-mode .header-stats {
 /* Page Headers & Footers */
 .page-header {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     width: 100%;
     border-bottom: 3px solid var(--primary-color);
-    padding-bottom: 8px;
+    padding-bottom: 4px;
     margin-bottom: 12px;
     z-index: 102;
 }
 
 .header-left {
     flex: 1;
-    font-size: 18px;
+    font-size: var(--custom-header-font-size, 15px);
     font-weight: 800;
     color: var(--primary-color);
     font-family: var(--font-heading);
     letter-spacing: 0 !important;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
     text-align: left;
+    line-height: 1;
 }
 
 .header-logo-img {
@@ -1927,7 +1934,7 @@ body.light-mode .header-stats {
 }
 
 .header-center span {
-    font-size: 12px;
+    font-size: var(--custom-header-font-size, 15px);
     font-weight: 800;
     color: #000000;
     font-family: var(--font-body);
@@ -1936,15 +1943,16 @@ body.light-mode .header-stats {
 
 .header-right {
     flex: 1;
-    font-size: 16px;
+    font-size: var(--custom-header-font-size, 15px);
     font-weight: 800;
     color: #000000;
     font-family: var(--font-ui);
     letter-spacing: 0.5px !important;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-end;
     text-align: right;
+    line-height: 1;
 }
 
 .header-line {
@@ -2675,12 +2683,12 @@ strong {
 
     .inner-border-wrapper {
         position: absolute !important;
-        top: 6mm !important;
-        bottom: 6mm !important;
-        left: 8mm !important;
-        right: 8mm !important;
+        top: var(--custom-page-margin-y, 6mm) !important;
+        bottom: var(--custom-page-margin-y, 6mm) !important;
+        left: var(--custom-page-margin-x, 8mm) !important;
+        right: var(--custom-page-margin-x, 8mm) !important;
         border: var(--custom-inner-border-thickness) solid var(--custom-inner-border-color) !important;
-        padding: 4mm 6mm 6mm 6mm !important;
+        padding: var(--custom-page-padding-y, 4mm) var(--custom-page-padding-x, 6mm) var(--custom-page-padding-y, 4mm) var(--custom-page-padding-x, 6mm) !important;
         box-sizing: border-box !important;
         display: flex !important;
         flex-direction: column !important;
@@ -2701,32 +2709,32 @@ strong {
         print-color-adjust: exact !important;
     }
     .top-left { 
-        top: 5mm !important; 
-        left: 7mm !important; 
+        top: calc(var(--custom-page-margin-y, 6mm) - 1mm) !important; 
+        left: calc(var(--custom-page-margin-x, 8mm) - 1mm) !important; 
         border-top: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-left: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-right: none !important; 
         border-bottom: none !important; 
     }
     .top-right { 
-        top: 5mm !important; 
-        right: 7mm !important; 
+        top: calc(var(--custom-page-margin-y, 6mm) - 1mm) !important; 
+        right: calc(var(--custom-page-margin-x, 8mm) - 1mm) !important; 
         border-top: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-right: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-left: none !important; 
         border-bottom: none !important; 
     }
     .bottom-left { 
-        bottom: 5mm !important; 
-        left: 7mm !important; 
+        bottom: calc(var(--custom-page-margin-y, 6mm) - 1mm) !important; 
+        left: calc(var(--custom-page-margin-x, 8mm) - 1mm) !important; 
         border-bottom: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-left: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-right: none !important; 
         border-top: none !important; 
     }
     .bottom-right { 
-        bottom: 5mm !important; 
-        right: 7mm !important; 
+        bottom: calc(var(--custom-page-margin-y, 6mm) - 1mm) !important; 
+        right: calc(var(--custom-page-margin-x, 8mm) - 1mm) !important; 
         border-bottom: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-right: calc(3 * var(--custom-inner-border-thickness)) solid var(--custom-corner-color) !important; 
         border-left: none !important; 
@@ -5442,84 +5450,25 @@ body.theme-raaz-compact .page-content p.body-text {
     text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
 }
 
-/* iOS Glass Theme Popup Box - Ultra Premium 1 Crore Theme (Compact & Responsive) */
+/* iOS Glass Theme Popup Box - Developer Profile Modal (Compact & Elegant Vertical Layout) */
 .raaz-profile-card {
     font-family: 'Outfit', 'Google Sans', 'Product Sans', system-ui, -apple-system, sans-serif !important;
     background: radial-gradient(circle at 0% 0%, rgba(0, 240, 255, 0.12), transparent 45%),
                 radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.15), transparent 45%),
-                rgba(13, 13, 20, 0.82) !important;
+                rgba(13, 13, 20, 0.85) !important;
     backdrop-filter: blur(30px) saturate(210%) !important;
     -webkit-backdrop-filter: blur(30px) saturate(210%) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 20px !important;
+    border-radius: 24px !important;
     position: relative;
-    overflow-y: auto !important;
     width: 350px !important;
     max-width: 92vw !important;
     max-height: 90vh !important;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7),
+    overflow-y: auto !important;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8),
                 0 0 40px rgba(0, 240, 255, 0.08),
                 inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
 }
-
-/* ── Landscape Layout — All Screens ───────────────────── */
-
-.raaz-profile-card {
-    width: min(700px, 96vw) !important;
-    max-width: 96vw !important;
-    max-height: 92vh !important;
-    overflow-y: auto !important;
-}
-
-/* Body: horizontal row — avatar left | info right */
-.raaz-profile-body {
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: 0 !important;
-    padding: 20px !important;
-}
-
-/* Left column — avatar */
-.raaz-profile-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    flex: 0 0 auto;
-    width: clamp(110px, 28vw, 160px) !important;
-    padding-right: 16px;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    margin-right: 16px;
-}
-
-/* Avatar size — fluid */
-.raaz-avatar-container {
-    width: clamp(80px, 20vw, 120px) !important;
-    height: clamp(80px, 20vw, 120px) !important;
-    margin-bottom: 10px !important;
-}
-
-/* Info grid — 1 col on very small, 2 col on wider */
-.raaz-info-grid {
-    grid-template-columns: 1fr !important;
-}
-
-@media screen and (min-width: 480px) {
-    .raaz-info-grid {
-        grid-template-columns: 1fr 1fr !important;
-    }
-}
-
-/* Right column — info + tags */
-.raaz-profile-right-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-    width: 100%;
-}
-
-/* ─────────────────────────────────────────────────────── */
 
 .raaz-profile-card::after {
     content: '';
@@ -5535,9 +5484,11 @@ body.theme-raaz-compact .page-content p.body-text {
 .raaz-profile-body {
     padding: 24px 20px !important;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .raaz-profile-header {
@@ -5552,7 +5503,7 @@ body.theme-raaz-compact .page-content p.body-text {
     position: relative;
     width: 110px !important;
     height: 110px !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 14px !important;
 }
 
 .raaz-avatar {
@@ -5588,7 +5539,7 @@ body.theme-raaz-compact .page-content p.body-text {
 
 .raaz-name {
     font-family: 'Outfit', 'Google Sans', 'Product Sans', sans-serif !important;
-    font-size: 21px !important;
+    font-size: 22px !important;
     font-weight: 800;
     color: #fff;
     margin: 4px 0 6px 0;
@@ -5600,7 +5551,7 @@ body.theme-raaz-compact .page-content p.body-text {
 
 .raaz-title {
     font-family: 'Outfit', 'Google Sans', 'Product Sans', sans-serif !important;
-    font-size: 10.5px !important;
+    font-size: 11px !important;
     color: #00f0ff;
     font-weight: 700;
     text-transform: capitalize;
@@ -5615,12 +5566,12 @@ body.theme-raaz-compact .page-content p.body-text {
 .raaz-info-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 10px !important;
+    gap: 12px !important;
     width: 100%;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px !important;
-    padding: 14px !important;
+    padding: 16px !important;
     box-sizing: border-box;
     backdrop-filter: blur(10px);
 }
@@ -5634,8 +5585,8 @@ body.theme-raaz-compact .page-content p.body-text {
 .raaz-info-icon {
     font-size: 16px !important;
     background: rgba(255, 255, 255, 0.03);
-    width: 34px !important;
-    height: 34px !important;
+    width: 36px !important;
+    height: 36px !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5661,7 +5612,7 @@ body.theme-raaz-compact .page-content p.body-text {
 }
 
 .raaz-info-content span {
-    font-size: 12.5px !important;
+    font-size: 13px !important;
     font-weight: 600;
     color: #f4f4f5;
 }
@@ -6314,4 +6265,807 @@ body.light-mode .premium-slider-group input[type="range"]::-webkit-slider-thumb 
     box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2);
 }
 
+/* Premium Glassmorphism Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 10, 15, 0.75);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.loading-spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(245, 158, 11, 0.15);
+    border-radius: 50%;
+    border-top: 4px solid var(--ui-accent, #f59e0b);
+    border-right: 4px solid #00f0ff;
+    animation: spin 0.8s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
+}
+
+.loading-text {
+    font-family: 'Outfit', 'Google Sans', sans-serif;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+
+/* ==========================================================================
+   8. PREMIUM COVER PAGE THEMES
+   ========================================================================== */
+
+/* Theme 1: Royal Rajwadi Gold (शाही राजवाड़ी स्वर्ण) */
+.cover-page.cover-theme-royal-rajwadi {
+    background: radial-gradient(circle at 50% 50%, #fffbf2 0%, #fdf5e2 70%, #f5e4bd 100%) !important;
+}
+.cover-page.cover-theme-royal-rajwadi .cover-page-content {
+    background: transparent !important;
+}
+.cover-page.cover-theme-royal-rajwadi .inner-border-wrapper {
+    border: 3px double #c5a353 !important;
+}
+.cover-page.cover-theme-royal-rajwadi .corner-decor {
+    border-color: #c5a353 !important;
+}
+.cover-page.cover-theme-royal-rajwadi .cover-title {
+    font-family: 'Rozha One', serif !important;
+    font-size: 52px !important;
+    color: #850f0f !important;
+    border: 4px double #c5a353 !important;
+    background: rgba(133, 15, 15, 0.02) !important;
+    padding: 18px 30px !important;
+    border-radius: 12px 30px !important;
+    text-shadow: 2px 2px 0px rgba(197, 160, 89, 0.15) !important;
+    box-shadow: 0 8px 24px rgba(197, 160, 89, 0.12), inset 0 0 10px rgba(197, 162, 83, 0.08) !important;
+    display: inline-block !important;
+    margin-top: 0 !important;
+    line-height: 1.25 !important;
+}
+.cover-page.cover-theme-royal-rajwadi .cover-tagline-box h3 {
+    font-size: 20px !important;
+    background: linear-gradient(90deg, transparent 0%, #850f0f 15%, #b91c1c 50%, #850f0f 85%, transparent 100%) !important;
+    color: #c5a353 !important;
+    border: none !important;
+    border-top: 1.5px solid #c5a353 !important;
+    border-bottom: 1.5px solid #c5a353 !important;
+    padding: 8px 40px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4) !important;
+    margin-top: 15px !important;
+    border-radius: 0 !important;
+}
+.cover-page.cover-theme-royal-rajwadi .cover-subtitle {
+    font-size: 21px !important;
+    color: #850f0f !important;
+    border: 2px solid #c5a353 !important;
+    background: #ffffff !important;
+    border-radius: 50px !important;
+    padding: 6px 30px !important;
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.15) !important;
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+}
+.cover-page.cover-theme-royal-rajwadi .toc-container {
+    border: 3px double #c5a353 !important;
+    background: #fffefb !important;
+    border-radius: 12px 30px !important;
+    box-shadow: 0 10px 25px rgba(133, 15, 15, 0.05) !important;
+}
+.cover-page.cover-theme-royal-rajwadi .toc-title {
+    color: #850f0f !important;
+    font-family: 'Rozha One', serif !important;
+}
+.cover-page.cover-theme-royal-rajwadi .toc-title::before,
+.cover-page.cover-theme-royal-rajwadi .toc-title::after {
+    content: '⚜️' !important;
+    color: #c5a353 !important;
+}
+.cover-page.cover-theme-royal-rajwadi .toc-title-divider {
+    background: linear-gradient(90deg, transparent, #c5a353, transparent) !important;
+    height: 1.5px !important;
+}
+.cover-page.cover-theme-royal-rajwadi .toc-header {
+    background-color: #850f0f !important;
+    color: #fffdf5 !important;
+    border-bottom: 2px solid #c5a353 !important;
+    font-weight: 700 !important;
+}
+.cover-page.cover-theme-royal-rajwadi .toc-row {
+    border-bottom: 1px dashed rgba(197, 160, 89, 0.4) !important;
+    color: #333333 !important;
+}
+.cover-page.cover-theme-royal-rajwadi .toc-row-page {
+    color: #850f0f !important;
+    font-weight: 700 !important;
+}
+
+/* Theme 2: Obsidian Neo-Gothic (ऑब्सिडियन नव-गॉथिक) */
+.cover-page.cover-theme-obsidian-gothic {
+    background: radial-gradient(circle at 50% 50%, #1c1d22 0%, #0d0e12 100%) !important;
+}
+.cover-page.cover-theme-obsidian-gothic .cover-page-content {
+    background: transparent !important;
+}
+.cover-page.cover-theme-obsidian-gothic .inner-border-wrapper {
+    border-color: rgba(0, 240, 255, 0.2) !important;
+}
+.cover-page.cover-theme-obsidian-gothic .corner-decor {
+    border-color: #00f0ff !important;
+}
+.cover-page.cover-theme-obsidian-gothic .cover-title {
+    font-family: 'Yatra One', cursive !important;
+    font-size: 55px !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.04) 100%) !important;
+    border: 2px solid rgba(0, 240, 255, 0.3) !important;
+    border-left: 8px solid #00f0ff !important;
+    padding: 15px 35px !important;
+    border-radius: 4px 16px 16px 4px !important;
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.3) !important;
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.08) !important;
+    margin-top: 0 !important;
+    line-height: 1.25 !important;
+    display: inline-block !important;
+}
+.cover-page.cover-theme-obsidian-gothic .cover-tagline-box h3 {
+    font-size: 19px !important;
+    background: rgba(0, 240, 255, 0.06) !important;
+    color: #00f0ff !important;
+    border: 1px solid rgba(0, 240, 255, 0.25) !important;
+    padding: 6px 30px !important;
+    border-radius: 30px !important;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
+    margin-top: 15px !important;
+}
+.cover-page.cover-theme-obsidian-gothic .cover-subtitle {
+    font-size: 21px !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 6px !important;
+    padding: 6px 25px !important;
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+}
+.cover-page.cover-theme-obsidian-gothic .toc-container {
+    border: 1px solid rgba(0, 240, 255, 0.25) !important;
+    background: rgba(13, 13, 20, 0.85) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+}
+.cover-page.cover-theme-obsidian-gothic .toc-title {
+    color: #00f0ff !important;
+    font-family: 'Yatra One', cursive !important;
+    text-shadow: 0 0 8px rgba(0,240,255,0.4) !important;
+}
+.cover-page.cover-theme-obsidian-gothic .toc-title::before,
+.cover-page.cover-theme-obsidian-gothic .toc-title::after {
+    content: '✦' !important;
+    color: #00f0ff !important;
+}
+.cover-page.cover-theme-obsidian-gothic .toc-title-divider {
+    background: linear-gradient(90deg, transparent, #00f0ff, transparent) !important;
+    height: 1px !important;
+}
+.cover-page.cover-theme-obsidian-gothic .toc-header {
+    background-color: rgba(0, 240, 255, 0.1) !important;
+    color: #00f0ff !important;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.3) !important;
+}
+.cover-page.cover-theme-obsidian-gothic .toc-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #e2e8f0 !important;
+}
+.cover-page.cover-theme-obsidian-gothic .toc-row-page {
+    color: #00f0ff !important;
+    font-weight: 700 !important;
+}
+
+/* Theme 3: Maharaja Emerald Palace (महाराजा मरकत महल) */
+.cover-page.cover-theme-emerald-palace {
+    background: radial-gradient(circle at 50% 50%, #043625 0%, #011e14 100%) !important;
+}
+.cover-page.cover-theme-emerald-palace .cover-page-content {
+    background: transparent !important;
+}
+.cover-page.cover-theme-emerald-palace .inner-border-wrapper {
+    border-color: rgba(212, 175, 55, 0.25) !important;
+}
+.cover-page.cover-theme-emerald-palace .corner-decor {
+    border-color: #d4af37 !important;
+}
+.cover-page.cover-theme-emerald-palace .cover-title {
+    font-family: 'Rozha One', serif !important;
+    font-size: 55px !important;
+    color: #d4af37 !important;
+    background: linear-gradient(180deg, rgba(212,175,55,0.04) 0%, rgba(212,175,55,0) 100%) !important;
+    border: 2px solid #d4af37 !important;
+    border-radius: 60px 60px 12px 12px !important;
+    padding: 20px 40px !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4) !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25) !important;
+    margin-top: 0 !important;
+    line-height: 1.25 !important;
+    display: inline-block !important;
+}
+.cover-page.cover-theme-emerald-palace .cover-tagline-box h3 {
+    font-size: 18px !important;
+    background: #d4af37 !important;
+    color: #011e14 !important;
+    border: none !important;
+    padding: 6px 30px !important;
+    clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 100% 100%, 10px 100%, 0% 50%) !important;
+    margin-top: 15px !important;
+    font-weight: 800 !important;
+    border-radius: 0 !important;
+}
+.cover-page.cover-theme-emerald-palace .cover-subtitle {
+    font-size: 20px !important;
+    color: #d4af37 !important;
+    border: 1.5px solid #d4af37 !important;
+    background: transparent !important;
+    border-radius: 30px !important;
+    padding: 6px 25px !important;
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+}
+.cover-page.cover-theme-emerald-palace .toc-container {
+    border: 1.5px solid rgba(212, 175, 55, 0.25) !important;
+    border-left: 5px double #d4af37 !important;
+    border-right: 5px double #d4af37 !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+}
+.cover-page.cover-theme-emerald-palace .toc-title {
+    color: #d4af37 !important;
+    font-family: 'Rozha One', serif !important;
+}
+.cover-page.cover-theme-emerald-palace .toc-title::before,
+.cover-page.cover-theme-emerald-palace .toc-title::after {
+    content: '⚜️' !important;
+    color: #d4af37 !important;
+}
+.cover-page.cover-theme-emerald-palace .toc-title-divider {
+    background: linear-gradient(90deg, transparent, #d4af37, transparent) !important;
+    height: 1.5px !important;
+}
+.cover-page.cover-theme-emerald-palace .toc-header {
+    background-color: #011e14 !important;
+    color: #d4af37 !important;
+    border-bottom: 2px solid #d4af37 !important;
+}
+.cover-page.cover-theme-emerald-palace .toc-row {
+    border-bottom: 1px dashed rgba(212, 175, 55, 0.3) !important;
+    color: #d4af37 !important;
+}
+.cover-page.cover-theme-emerald-palace .toc-row-page {
+    color: #ffffff !important;
+    background-color: #d4af37 !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+}
+
+/* Theme 4: Vedic Ashram Classic (वैदिक आश्रम) */
+.cover-page.cover-theme-vedic-ashram {
+    background: radial-gradient(circle at 50% 50%, #fffaf5 0%, #fff1dd 75%, #ffdfb3 100%) !important;
+}
+.cover-page.cover-theme-vedic-ashram .cover-page-content {
+    background: transparent !important;
+}
+.cover-page.cover-theme-vedic-ashram .inner-border-wrapper {
+    border-color: rgba(180, 83, 9, 0.25) !important;
+}
+.cover-page.cover-theme-vedic-ashram .corner-decor {
+    border-color: #b45309 !important;
+}
+.cover-page.cover-theme-vedic-ashram .cover-title {
+    font-family: 'Yatra One', cursive !important;
+    font-size: 52px !important;
+    color: #b45309 !important;
+    border: 6px solid #b45309 !important;
+    outline: 2px solid #f59e0b !important;
+    outline-offset: -10px !important;
+    background: rgba(245, 158, 11, 0.02) !important;
+    padding: 20px 40px !important;
+    border-radius: 4px !important;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.03) !important;
+    margin-top: 0 !important;
+    line-height: 1.25 !important;
+    display: inline-block !important;
+}
+.cover-page.cover-theme-vedic-ashram .cover-tagline-box h3 {
+    font-size: 20px !important;
+    color: #b45309 !important;
+    border: 4px double #b45309 !important;
+    background: transparent !important;
+    padding: 5px 30px !important;
+    margin-top: 15px !important;
+    border-radius: 0 !important;
+}
+.cover-page.cover-theme-vedic-ashram .cover-subtitle {
+    font-size: 21px !important;
+    color: #ffffff !important;
+    background: #d97706 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 6px 30px !important;
+    box-shadow: 0 4px 10px rgba(217, 119, 6, 0.15) !important;
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+}
+.cover-page.cover-theme-vedic-ashram .toc-container {
+    border: 2px solid #b45309 !important;
+    background: #fffdfa !important;
+    border-radius: 6px !important;
+    box-shadow: inset 0 0 12px rgba(180, 83, 9, 0.05) !important;
+}
+.cover-page.cover-theme-vedic-ashram .toc-title {
+    color: #b45309 !important;
+    font-family: 'Yatra One', cursive !important;
+}
+.cover-page.cover-theme-vedic-ashram .toc-title::before,
+.cover-page.cover-theme-vedic-ashram .toc-title::after {
+    content: '🔱' !important;
+    color: #d97706 !important;
+}
+.cover-page.cover-theme-vedic-ashram .toc-title-divider {
+    background: #b45309 !important;
+    height: 2px !important;
+}
+.cover-page.cover-theme-vedic-ashram .toc-header {
+    background-color: #b45309 !important;
+    color: #ffffff !important;
+    border-bottom: 2px solid #f59e0b !important;
+}
+.cover-page.cover-theme-vedic-ashram .toc-row {
+    border-bottom: 1px solid rgba(180, 83, 9, 0.15) !important;
+    color: #451a03 !important;
+    font-weight: 500 !important;
+}
+.cover-page.cover-theme-vedic-ashram .toc-row-page {
+    color: #b45309 !important;
+    font-weight: 700 !important;
+}
+
+/* Theme 5: Modern Magazine Editorial (संपादकीय पत्रिका) */
+.cover-page.cover-theme-modern-editorial {
+    background: #f8fafc !important;
+}
+.cover-page.cover-theme-modern-editorial .cover-page-content {
+    background: transparent !important;
+}
+.cover-page.cover-theme-modern-editorial .inner-border-wrapper {
+    border-color: #0f172a !important;
+    border-width: 3px !important;
+}
+.cover-page.cover-theme-modern-editorial .corner-decor {
+    border-color: #0f172a !important;
+}
+.cover-page.cover-theme-modern-editorial .cover-title {
+    font-family: 'Outfit', 'Google Sans', sans-serif !important;
+    font-size: 58px !important;
+    color: #0f172a !important;
+    border: 3px solid #0f172a !important;
+    background: #ffffff !important;
+    padding: 15px 35px !important;
+    box-shadow: 8px 8px 0px #0f172a !important;
+    border-radius: 0px !important;
+    letter-spacing: -1px !important;
+    text-transform: uppercase !important;
+    margin-top: 0 !important;
+    line-height: 1.25 !important;
+    display: inline-block !important;
+}
+.cover-page.cover-theme-modern-editorial .cover-tagline-box h3 {
+    font-size: 19px !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 6px 30px !important;
+    box-shadow: 4px 4px 0px #ef4444 !important;
+    border-radius: 0px !important;
+    margin-top: 15px !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+}
+.cover-page.cover-theme-modern-editorial .cover-subtitle {
+    font-size: 20px !important;
+    color: #0f172a !important;
+    border: 2px solid #0f172a !important;
+    background: #ffffff !important;
+    border-radius: 0px !important;
+    padding: 6px 25px !important;
+    margin-top: 20px !important;
+    margin-bottom: 25px !important;
+}
+.cover-page.cover-theme-modern-editorial .toc-container {
+    border: 3px solid #0f172a !important;
+    background: #ffffff !important;
+    box-shadow: 8px 8px 0px #0f172a !important;
+    border-radius: 0px !important;
+}
+.cover-page.cover-theme-modern-editorial .toc-title {
+    color: #0f172a !important;
+    font-family: 'Outfit', sans-serif !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+}
+.cover-page.cover-theme-modern-editorial .toc-title::before,
+.cover-page.cover-theme-modern-editorial .toc-title::after {
+    content: '■' !important;
+    color: #ef4444 !important;
+}
+.cover-page.cover-theme-modern-editorial .toc-title-divider {
+    background: #0f172a !important;
+    height: 3px !important;
+}
+.cover-page.cover-theme-modern-editorial .toc-header {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border-bottom: 3px solid #0f172a !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+}
+.cover-page.cover-theme-modern-editorial .toc-row {
+    border-bottom: 2px solid #0f172a !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+.cover-page.cover-theme-modern-editorial .toc-row-page {
+    color: #ffffff !important;
+    background-color: #ef4444 !important;
+    border: 1.5px solid #0f172a !important;
+    padding: 2px 6px !important;
+    font-weight: 800 !important;
+}
+
+/* ==========================================================================
+   9. COVER PAGE BORDER PATTERNS & TITLE EMBLEMS
+   ========================================================================== */
+
+/* Layout overrides to ensure vertical centering */
+.a4-page.cover-page .cover-page-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+}
+
+.a4-page.cover-page .cover-title {
+    margin-top: 0 !important;
+}
+
+/* --- Feature 1: Cover Border Patterns --- */
+.inner-border-wrapper.cover-border-double-gold {
+    border: 4px double #d4af37 !important;
+}
+.inner-border-wrapper.cover-border-dots {
+    border: 3px dotted var(--primary-color, #850f0f) !important;
+}
+.inner-border-wrapper.cover-border-ornate-frame {
+    border: 2px solid #b45309 !important;
+    outline: 4px double #b45309 !important;
+    outline-offset: 4px !important;
+}
+.inner-border-wrapper.cover-border-none {
+    border: none !important;
+}
+
+/* --- Feature 2: Cover Title Emblems (Absolutely positioned at the top) --- */
+.cover-emblem {
+    position: absolute !important;
+    top: 12mm !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 10 !important;
+    user-select: none !important;
+}
+
+/* Emblem Style A: Royal Gold Seal */
+.cover-emblem-royal-seal {
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 50% !important;
+    border: 2.5px solid #d4af37 !important;
+    background: radial-gradient(circle, #850f0f 55%, #500a0a 100%) !important;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.35), inset 0 0 10px rgba(212, 175, 55, 0.45) !important;
+    position: absolute !important;
+}
+.cover-emblem-royal-seal .seal-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #d4af37 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+.cover-emblem-royal-seal .seal-icon {
+    font-size: 18px !important;
+    line-height: 1 !important;
+}
+.cover-emblem-royal-seal .seal-text {
+    font-size: 8px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    margin-top: 2px !important;
+    font-family: 'Martel', serif !important;
+}
+
+/* Emblem Style B: Verified Quality Badge */
+.cover-emblem-verified-badge {
+    border: 2px solid #00f0ff !important;
+    background: rgba(0, 240, 255, 0.08) !important;
+    border-radius: 30px !important;
+    padding: 5px 14px !important;
+    box-shadow: 0 4px 12px rgba(0, 240, 255, 0.15), inset 0 0 6px rgba(0, 240, 255, 0.1) !important;
+    backdrop-filter: blur(5px) !important;
+    position: absolute !important;
+}
+.cover-emblem-verified-badge .badge-inner {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+.cover-emblem-verified-badge .badge-icon {
+    color: #00f0ff !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
+}
+.cover-emblem-verified-badge .badge-text {
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* Emblem Style C: Samyak Exclusive Star */
+.cover-emblem-exclusive-star {
+    border: 1.5px solid #d4af37 !important;
+    background: #0a0a0a !important;
+    border-radius: 4px !important;
+    padding: 4px 12px !important;
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.15) !important;
+    position: absolute !important;
+}
+.cover-emblem-exclusive-star .star-inner {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+.cover-emblem-exclusive-star .star-icon {
+    color: #d4af37 !important;
+    font-size: 12px !important;
+}
+.cover-emblem-exclusive-star .star-text {
+    color: #d4af37 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    font-family: 'Outfit', sans-serif !important;
+}
+
+/* Emblem Style D: Vintage Editorial Seal */
+.cover-emblem-vintage-emblem {
+    border: 3px double #0f172a !important;
+    padding: 6px 15px !important;
+    background: #ffffff !important;
+    border-radius: 0px !important;
+    box-shadow: 4px 4px 0px #0f172a !important;
+    position: absolute !important;
+}
+.cover-emblem-vintage-emblem .vintage-inner {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+.cover-emblem-vintage-emblem .vintage-icon {
+    color: #0f172a !important;
+    font-size: 13px !important;
+}
+.cover-emblem-vintage-emblem .vintage-text {
+    color: #0f172a !important;
+    font-size: 10.5px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px !important;
+    font-family: 'Outfit', sans-serif !important;
+}
+
+/* ==========================================================================
+   COVER PAGE CLASSIFICATION & TYPOGRAPHY SIZER STYLES
+   ========================================================================== */
+
+/* Default Cover Classification block (stable spacing) */
+.cover-classification {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--secondary-color);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 18mm; /* default spacing under emblem spacing */
+    margin-bottom: 5px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.cover-classification:empty {
+    min-height: 30px;
+}
+
+/* Theme 1: Royal Rajwadi Gold */
+.cover-page.cover-theme-royal-rajwadi .cover-classification {
+    font-family: 'Rozha One', serif !important;
+    color: #850f0f !important;
+    text-shadow: 1px 1px 0px rgba(197, 160, 89, 0.2) !important;
+}
+
+/* Theme 2: Obsidian Neo-Gothic */
+.cover-page.cover-theme-obsidian-gothic .cover-classification {
+    font-family: 'Yatra One', cursive !important;
+    color: #00f0ff !important;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4) !important;
+}
+
+/* Theme 3: Maharaja Emerald Palace */
+.cover-page.cover-theme-emerald-palace .cover-classification {
+    font-family: 'Rozha One', serif !important;
+    color: #d4af37 !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4) !important;
+}
+
+/* Theme 4: Vedic Ashram Classic */
+.cover-page.cover-theme-vedic-ashram .cover-classification {
+    font-family: 'Yatra One', cursive !important;
+    color: #b45309 !important;
+}
+
+/* Theme 5: Modern Magazine Editorial */
+.cover-page.cover-theme-modern-editorial .cover-classification {
+    font-family: 'Outfit', 'Google Sans', sans-serif !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    border-bottom: 2px solid #0f172a !important;
+    padding-bottom: 4px !important;
+    width: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Cover Typography Sizes settings panel */
+.cover-font-sizes-group {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1.5px solid var(--ui-border);
+    border-radius: var(--border-radius-sm);
+    padding: 12px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    grid-column: 1 / -1;
+}
+
+.settings-subheading {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ui-accent);
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px dashed var(--ui-border);
+    padding-bottom: 6px;
+}
+
+.input-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.slider-with-val {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider-with-val input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.slider-with-val input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--ui-accent);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.slider-with-val input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.slider-with-val span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #f4f4f5;
+    background: rgba(22, 22, 38, 0.8);
+    border: 1px solid var(--ui-border);
+    padding: 2px 6px;
+    border-radius: var(--border-radius-xs);
+    min-width: 38px;
+    text-align: center;
+}
 
