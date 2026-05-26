@@ -1579,8 +1579,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Try Web Share API first (works on mobile — allows saving to Google Drive, WhatsApp, etc.)
         if (navigator.canShare) {
-            const file = new File([blob], fileName, { type: 'application/json' });
-            const shareData = { files: [file], title: fileName, text: `Samyak Project: ${subtitleText}` };
+            const shareFileName = `${fileNameClean || 'Samyak'}.raaz.txt`;
+            const file = new File([blob], shareFileName, { type: 'text/plain' });
+            const shareData = { files: [file], title: shareFileName, text: `Samyak Project: ${subtitleText}` };
             
             if (navigator.canShare(shareData)) {
                 navigator.share(shareData)
@@ -5993,6 +5994,14 @@ document.addEventListener('DOMContentLoaded', () => {
             { value: 'zen-compact', name: '⛩️ Kyoto Zen - Compact', category: 'morphing', colors: ['#991b1b', '#fbcfe8', '#4b5563'] },
 
             // 10 Brand New Ultra-Premium Shape-Shifting Themes
+            { value: 'lokbandhu-surya', name: '🌅 Lokbandhu Surya Sandhya', category: 'ultra-premium', colors: ['#8c1d1d', '#f59e0b', '#c2410c'] },
+            { value: 'surya-compact', name: '🌅 Lokbandhu Surya Sandhya - Compact', category: 'ultra-premium', colors: ['#8c1d1d', '#f59e0b', '#c2410c'] },
+            { value: 'lokbandhu-madhu', name: '🍯 Lokbandhu Madhu-Keshara', category: 'ultra-premium', colors: ['#78350f', '#f97316', '#eab308'] },
+            { value: 'madhu-compact', name: '🍯 Lokbandhu Madhu-Keshara - Compact', category: 'ultra-premium', colors: ['#78350f', '#f97316', '#eab308'] },
+            { value: 'lokbandhu-agni', name: '🔥 Lokbandhu Agni-Tejas', category: 'ultra-premium', colors: ['#3b160b', '#ea580c', '#d97706'] },
+            { value: 'agni-compact', name: '🔥 Lokbandhu Agni-Tejas - Compact', category: 'ultra-premium', colors: ['#3b160b', '#ea580c', '#d97706'] },
+            { value: 'lokbandhu-chandan', name: '🪵 Lokbandhu Chandan-Kastha', category: 'ultra-premium', colors: ['#5c3a21', '#c29b53', '#855a30'] },
+            { value: 'chandan-compact', name: '🪵 Lokbandhu Chandan-Kastha - Compact', category: 'ultra-premium', colors: ['#5c3a21', '#c29b53', '#855a30'] },
             { value: 'gothic-royal', name: '🏰 Gothic Royal Black', category: 'ultra-premium', colors: ['#4a0e17', '#b8860b', '#1a1a1a'] },
             { value: 'royal-compact-v2', name: '🏰 Gothic Royal Black - Compact', category: 'ultra-premium', colors: ['#4a0e17', '#b8860b', '#1a1a1a'] },
             { value: 'kyoto-ink', name: '⛩️ Zen Kyoto & Ink', category: 'ultra-premium', colors: ['#111111', '#b22222', '#cda557'] },

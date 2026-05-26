@@ -281,6 +281,46 @@ body.theme-kyoto-zen, body.theme-zen-compact {
    10 BRAND-NEW ULTRA-PREMIUM THEMES
    ========================================== */
 
+/* 0A. Sunset Premium */
+body.theme-lokbandhu-surya, body.theme-surya-compact {
+    --primary-color: #8c1d1d;      /* Deep Royal Crimson */
+    --secondary-color: #f59e0b;    /* Sunset Amber */
+    --accent-color: #c2410c;       /* Warm Rust Orange */
+    --page-bg: #fffbeb;            /* Sun-glow Warm Alabaster */
+    --text-color: #311005;         /* Espresso Dusk */
+    --heading-color: #5f1515;      /* Deep Crimson-Mahogany */
+}
+
+/* 0B. Honey & Saffron */
+body.theme-lokbandhu-madhu, body.theme-madhu-compact {
+    --primary-color: #78350f;      /* Rich Honey-Amber Brown */
+    --secondary-color: #f97316;    /* Saffron Orange */
+    --accent-color: #eab308;       /* Saffron Yellow */
+    --page-bg: #fffdf5;            /* Delicate Cream Honey */
+    --text-color: #240f04;         /* Dark Cocoa */
+    --heading-color: #542003;      /* Rich Bronze Espresso */
+}
+
+/* 0C. Sacred Royal Ember */
+body.theme-lokbandhu-agni, body.theme-agni-compact {
+    --primary-color: #3b160b;      /* Deep Charcoal Mahogany */
+    --secondary-color: #ea580c;    /* Fiery Orange */
+    --accent-color: #d97706;       /* Blazing Fire Gold */
+    --page-bg: #fdfbf7;            /* Clean Ash Ivory */
+    --text-color: #1c0d08;         /* Obsidian Ash */
+    --heading-color: #3b160b;      /* Sacred Mahogany */
+}
+
+/* 0D. Sandalwood & Heritage Brass */
+body.theme-lokbandhu-chandan, body.theme-chandan-compact {
+    --primary-color: #5c3a21;      /* Sandalwood Dark Wood */
+    --secondary-color: #c29b53;    /* Heritage Brass Gold */
+    --accent-color: #855a30;       /* Warm Sandalwood Clay */
+    --page-bg: #fefbf5;            /* Premium Alabaster Sandalwood */
+    --text-color: #1c1109;         /* Chandan Charcoal */
+    --heading-color: #3e2614;      /* Deep Sandalwood */
+}
+
 /* 1. Gothic Royal Black */
 body.theme-gothic-royal, body.theme-royal-compact-v2 {
     --primary-color: #4a0e17;      /* Gothic Burgundy */
@@ -412,7 +452,11 @@ body.theme-victorian-compact-v2 .section-heading-bar,
 body.theme-neo-gothic-compact .section-heading-bar,
 body.theme-sapphire-compact-v2 .section-heading-bar,
 body.theme-jade-compact-v2 .section-heading-bar,
-body.theme-oasis-compact-v2 .section-heading-bar {
+body.theme-oasis-compact-v2 .section-heading-bar,
+body.theme-surya-compact .section-heading-bar,
+body.theme-madhu-compact .section-heading-bar,
+body.theme-agni-compact .section-heading-bar,
+body.theme-chandan-compact .section-heading-bar {
     padding: 3px 10px !important;
     margin: 3px 0 !important;
     font-size: calc(var(--custom-section-size) - 1.5px) !important;
@@ -448,7 +492,11 @@ body.theme-victorian-compact-v2 .topic-container,
 body.theme-neo-gothic-compact .topic-container,
 body.theme-sapphire-compact-v2 .topic-container,
 body.theme-jade-compact-v2 .topic-container,
-body.theme-oasis-compact-v2 .topic-container {
+body.theme-oasis-compact-v2 .topic-container,
+body.theme-surya-compact .topic-container,
+body.theme-madhu-compact .topic-container,
+body.theme-agni-compact .topic-container,
+body.theme-chandan-compact .topic-container {
     margin-top: 2px !important;
     margin-bottom: 1px !important;
 }
@@ -483,7 +531,11 @@ body.theme-victorian-compact-v2 .topic-title,
 body.theme-neo-gothic-compact .topic-title,
 body.theme-sapphire-compact-v2 .topic-title,
 body.theme-jade-compact-v2 .topic-title,
-body.theme-oasis-compact-v2 .topic-title {
+body.theme-oasis-compact-v2 .topic-title,
+body.theme-surya-compact .topic-title,
+body.theme-madhu-compact .topic-title,
+body.theme-agni-compact .topic-title,
+body.theme-chandan-compact .topic-title {
     font-size: calc(var(--custom-topic-size) - 1px) !important;
     padding-bottom: 1px !important;
 }
@@ -518,7 +570,11 @@ body.theme-victorian-compact-v2 .premium-box,
 body.theme-neo-gothic-compact .premium-box,
 body.theme-sapphire-compact-v2 .premium-box,
 body.theme-jade-compact-v2 .premium-box,
-body.theme-oasis-compact-v2 .premium-box {
+body.theme-oasis-compact-v2 .premium-box,
+body.theme-surya-compact .premium-box,
+body.theme-madhu-compact .premium-box,
+body.theme-agni-compact .premium-box,
+body.theme-chandan-compact .premium-box {
     margin: 3px 0 !important;
     padding: 6px 12px !important;
 }
@@ -553,7 +609,11 @@ body.theme-victorian-compact-v2 .highlight-box,
 body.theme-neo-gothic-compact .highlight-box,
 body.theme-sapphire-compact-v2 .highlight-box,
 body.theme-jade-compact-v2 .highlight-box,
-body.theme-oasis-compact-v2 .highlight-box {
+body.theme-oasis-compact-v2 .highlight-box,
+body.theme-surya-compact .highlight-box,
+body.theme-madhu-compact .highlight-box,
+body.theme-agni-compact .highlight-box,
+body.theme-chandan-compact .highlight-box {
     margin: 2px 0 !important;
     padding: 4px 8px !important;
 }
@@ -588,7 +648,11 @@ body.theme-victorian-compact-v2 p.body-text,
 body.theme-neo-gothic-compact p.body-text,
 body.theme-sapphire-compact-v2 p.body-text,
 body.theme-jade-compact-v2 p.body-text,
-body.theme-oasis-compact-v2 p.body-text {
+body.theme-oasis-compact-v2 p.body-text,
+body.theme-surya-compact p.body-text,
+body.theme-madhu-compact p.body-text,
+body.theme-agni-compact p.body-text,
+body.theme-chandan-compact p.body-text {
     margin-bottom: 2px !important;
     line-height: 1.3 !important;
 }
@@ -623,7 +687,11 @@ body.theme-victorian-compact-v2 .bullet-list,
 body.theme-neo-gothic-compact .bullet-list,
 body.theme-sapphire-compact-v2 .bullet-list,
 body.theme-jade-compact-v2 .bullet-list,
-body.theme-oasis-compact-v2 .bullet-list {
+body.theme-oasis-compact-v2 .bullet-list,
+body.theme-surya-compact .bullet-list,
+body.theme-madhu-compact .bullet-list,
+body.theme-agni-compact .bullet-list,
+body.theme-chandan-compact .bullet-list {
     gap: 2px !important;
 }
 
@@ -657,7 +725,11 @@ body.theme-victorian-compact-v2 .bullet-item,
 body.theme-neo-gothic-compact .bullet-item,
 body.theme-sapphire-compact-v2 .bullet-item,
 body.theme-jade-compact-v2 .bullet-item,
-body.theme-oasis-compact-v2 .bullet-item {
+body.theme-oasis-compact-v2 .bullet-item,
+body.theme-surya-compact .bullet-item,
+body.theme-madhu-compact .bullet-item,
+body.theme-agni-compact .bullet-item,
+body.theme-chandan-compact .bullet-item {
     line-height: 1.3 !important;
 }
 
@@ -4813,6 +4885,234 @@ body.theme-durbar-compact .toc-header {
 body.theme-royal-durbar .toc-row,
 body.theme-durbar-compact .toc-row {
     border-color: #f5c065 !important;
+}
+
+/* 1A. SUNSET PREMIUM COVER PAGE OVERRIDES */
+body.theme-lokbandhu-surya .a4-page.cover-page,
+body.theme-surya-compact .a4-page.cover-page {
+    background: #fff7e6 !important;
+}
+body.theme-lokbandhu-surya .cover-page-content,
+body.theme-surya-compact .cover-page-content {
+    background: transparent !important;
+}
+body.theme-lokbandhu-surya .cover-title,
+body.theme-surya-compact .cover-title {
+    color: #8c1d1d !important;
+    text-shadow: 3px 3px 0px #f59e0b, 5px 5px 15px rgba(140, 29, 29, 0.22) !important;
+    font-size: 78px !important;
+    margin-top: 25mm !important;
+}
+body.theme-lokbandhu-surya .cover-tagline-box h3,
+body.theme-surya-compact .cover-tagline-box h3 {
+    background: #8c1d1d !important;
+    color: #fffbeb !important;
+    border: 3px double #f59e0b !important;
+    border-radius: 20px !important;
+    padding: 6px 30px !important;
+    box-shadow: 0 4px 10px rgba(140, 29, 29, 0.18) !important;
+}
+body.theme-lokbandhu-surya .cover-subtitle,
+body.theme-surya-compact .cover-subtitle {
+    background: #fffbeb !important;
+    color: #8c1d1d !important;
+    border: 2px solid #f59e0b !important;
+    border-radius: 30px !important;
+    box-shadow: inset 0 0 5px rgba(245, 158, 11, 0.12) !important;
+}
+body.theme-lokbandhu-surya .toc-container,
+body.theme-surya-compact .toc-container {
+    border: 3px double #f59e0b !important;
+    background: #fffbf0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(140, 29, 29, 0.08) !important;
+}
+body.theme-lokbandhu-surya .toc-title::before,
+body.theme-lokbandhu-surya .toc-title::after,
+body.theme-surya-compact .toc-title::before,
+body.theme-surya-compact .toc-title::after {
+    content: '🌅' !important;
+    color: #f59e0b !important;
+}
+body.theme-lokbandhu-surya .toc-header,
+body.theme-surya-compact .toc-header {
+    background-color: #8c1d1d !important;
+    border-color: #f59e0b !important;
+}
+body.theme-lokbandhu-surya .toc-row,
+body.theme-surya-compact .toc-row {
+    border-color: #fcd34d !important;
+}
+
+/* 1B. HONEY & SAFFRON COVER PAGE OVERRIDES */
+body.theme-lokbandhu-madhu .a4-page.cover-page,
+body.theme-madhu-compact .a4-page.cover-page {
+    background: #fff8eb !important;
+}
+body.theme-lokbandhu-madhu .cover-page-content,
+body.theme-madhu-compact .cover-page-content {
+    background: transparent !important;
+}
+body.theme-lokbandhu-madhu .cover-title,
+body.theme-madhu-compact .cover-title {
+    color: #78350f !important;
+    text-shadow: 3px 3px 0px #f97316, 5px 5px 15px rgba(120, 53, 15, 0.22) !important;
+    font-size: 78px !important;
+    margin-top: 25mm !important;
+}
+body.theme-lokbandhu-madhu .cover-tagline-box h3,
+body.theme-madhu-compact .cover-tagline-box h3 {
+    background: #78350f !important;
+    color: #fffdf5 !important;
+    border: 3px double #f97316 !important;
+    border-radius: 20px !important;
+    padding: 6px 30px !important;
+    box-shadow: 0 4px 10px rgba(120, 53, 15, 0.18) !important;
+}
+body.theme-lokbandhu-madhu .cover-subtitle,
+body.theme-madhu-compact .cover-subtitle {
+    background: #fffdf5 !important;
+    color: #78350f !important;
+    border: 2px solid #f97316 !important;
+    border-radius: 30px !important;
+    box-shadow: inset 0 0 5px rgba(249, 115, 22, 0.12) !important;
+}
+body.theme-lokbandhu-madhu .toc-container,
+body.theme-madhu-compact .toc-container {
+    border: 3px double #f97316 !important;
+    background: #fffef7 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(120, 53, 15, 0.08) !important;
+}
+body.theme-lokbandhu-madhu .toc-title::before,
+body.theme-lokbandhu-madhu .toc-title::after,
+body.theme-madhu-compact .toc-title::before,
+body.theme-madhu-compact .toc-title::after {
+    content: '🍯' !important;
+    color: #f97316 !important;
+}
+body.theme-lokbandhu-madhu .toc-header,
+body.theme-madhu-compact .toc-header {
+    background-color: #78350f !important;
+    border-color: #f97316 !important;
+}
+body.theme-lokbandhu-madhu .toc-row,
+body.theme-madhu-compact .toc-row {
+    border-color: #fdba74 !important;
+}
+
+/* 1C. SACRED ROYAL EMBER COVER PAGE OVERRIDES */
+body.theme-lokbandhu-agni .a4-page.cover-page,
+body.theme-agni-compact .a4-page.cover-page {
+    background: #fbf5eb !important;
+}
+body.theme-lokbandhu-agni .cover-page-content,
+body.theme-agni-compact .cover-page-content {
+    background: transparent !important;
+}
+body.theme-lokbandhu-agni .cover-title,
+body.theme-agni-compact .cover-title {
+    color: #3b160b !important;
+    text-shadow: 3px 3px 0px #ea580c, 5px 5px 15px rgba(59, 22, 11, 0.22) !important;
+    font-size: 78px !important;
+    margin-top: 25mm !important;
+}
+body.theme-lokbandhu-agni .cover-tagline-box h3,
+body.theme-agni-compact .cover-tagline-box h3 {
+    background: #3b160b !important;
+    color: #fdfbf7 !important;
+    border: 3px double #ea580c !important;
+    border-radius: 20px !important;
+    padding: 6px 30px !important;
+    box-shadow: 0 4px 10px rgba(59, 22, 11, 0.18) !important;
+}
+body.theme-lokbandhu-agni .cover-subtitle,
+body.theme-agni-compact .cover-subtitle {
+    background: #fdfbf7 !important;
+    color: #3b160b !important;
+    border: 2px solid #ea580c !important;
+    border-radius: 30px !important;
+    box-shadow: inset 0 0 5px rgba(234, 88, 12, 0.12) !important;
+}
+body.theme-lokbandhu-agni .toc-container,
+body.theme-agni-compact .toc-container {
+    border: 3px double #ea580c !important;
+    background: #fffdfc !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(59, 22, 11, 0.08) !important;
+}
+body.theme-lokbandhu-agni .toc-title::before,
+body.theme-lokbandhu-agni .toc-title::after,
+body.theme-agni-compact .toc-title::before,
+body.theme-agni-compact .toc-title::after {
+    content: '🔥' !important;
+    color: #ea580c !important;
+}
+body.theme-lokbandhu-agni .toc-header,
+body.theme-agni-compact .toc-header {
+    background-color: #3b160b !important;
+    border-color: #ea580c !important;
+}
+body.theme-lokbandhu-agni .toc-row,
+body.theme-agni-compact .toc-row {
+    border-color: #ff9858 !important;
+}
+
+/* 1D. SANDALWOOD & BRASS COVER PAGE OVERRIDES */
+body.theme-lokbandhu-chandan .a4-page.cover-page,
+body.theme-chandan-compact .a4-page.cover-page {
+    background: #fcf8f0 !important;
+}
+body.theme-lokbandhu-chandan .cover-page-content,
+body.theme-chandan-compact .cover-page-content {
+    background: transparent !important;
+}
+body.theme-lokbandhu-chandan .cover-title,
+body.theme-chandan-compact .cover-title {
+    color: #5c3a21 !important;
+    text-shadow: 3px 3px 0px #c29b53, 5px 5px 15px rgba(92, 58, 33, 0.22) !important;
+    font-size: 78px !important;
+    margin-top: 25mm !important;
+}
+body.theme-lokbandhu-chandan .cover-tagline-box h3,
+body.theme-chandan-compact .cover-tagline-box h3 {
+    background: #5c3a21 !important;
+    color: #fefbf5 !important;
+    border: 3px double #c29b53 !important;
+    border-radius: 20px !important;
+    padding: 6px 30px !important;
+    box-shadow: 0 4px 10px rgba(92, 58, 33, 0.18) !important;
+}
+body.theme-lokbandhu-chandan .cover-subtitle,
+body.theme-chandan-compact .cover-subtitle {
+    background: #fefbf5 !important;
+    color: #5c3a21 !important;
+    border: 2px solid #c29b53 !important;
+    border-radius: 30px !important;
+    box-shadow: inset 0 0 5px rgba(194, 155, 83, 0.12) !important;
+}
+body.theme-lokbandhu-chandan .toc-container,
+body.theme-chandan-compact .toc-container {
+    border: 3px double #c29b53 !important;
+    background: #fffefb !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(92, 58, 33, 0.08) !important;
+}
+body.theme-lokbandhu-chandan .toc-title::before,
+body.theme-lokbandhu-chandan .toc-title::after,
+body.theme-chandan-compact .toc-title::before,
+body.theme-chandan-compact .toc-title::after {
+    content: '🪵' !important;
+    color: #c29b53 !important;
+}
+body.theme-lokbandhu-chandan .toc-header,
+body.theme-chandan-compact .toc-header {
+    background-color: #5c3a21 !important;
+    border-color: #c29b53 !important;
+}
+body.theme-lokbandhu-chandan .toc-row,
+body.theme-chandan-compact .toc-row {
+    border-color: #e2c07d !important;
 }
 
 /* 2. CYBER SYNTHWAVE COVER PAGE OVERRIDES */
