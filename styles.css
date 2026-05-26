@@ -2480,6 +2480,10 @@ strong {
     letter-spacing: 0 !important;
 }
 
+.cover-page-content.tagline-empty .cover-subtitle {
+    margin-top: 8px !important;
+}
+
 /* Premium Markdown Table styles */
 .markdown-table {
     width: 100%;
@@ -2816,7 +2820,7 @@ strong {
     /* Remove default headers/footers */
     @page {
         size: A4;
-        margin: 0;
+        margin: 0 !important;
     }
     
     .page-watermark {

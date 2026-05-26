@@ -719,8 +719,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const titleEl = coverPage.querySelector('.cover-title');
         if (titleEl) titleEl.textContent = docTitleInput.value;
         
+        const taglineBoxEl = coverPage.querySelector('.cover-tagline-box');
         const taglineEl = coverPage.querySelector('.cover-tagline-box h3');
-        if (taglineEl) taglineEl.textContent = docTaglineInput.value;
+        const coverContentEl = coverPage.querySelector('.cover-page-content');
+        
+        const hasTagline = docTaglineInput.value && docTaglineInput.value.trim() !== '';
+        if (taglineBoxEl) {
+            if (hasTagline) {
+                taglineBoxEl.style.display = '';
+                if (taglineEl) taglineEl.textContent = docTaglineInput.value;
+                if (coverContentEl) coverContentEl.classList.remove('tagline-empty');
+            } else {
+                taglineBoxEl.style.display = 'none';
+                if (coverContentEl) coverContentEl.classList.add('tagline-empty');
+            }
+        }
         
         const subtitleEl = coverPage.querySelector('.cover-subtitle');
         if (subtitleEl) subtitleEl.textContent = docSubtitleInput.value;
@@ -734,6 +747,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 classificationEl.style.minHeight = '';
             }
         }
+        
+        updateDocumentTitle();
     }
 
     [docTitleInput, docTaglineInput, docSubtitleInput, docClassificationInput].forEach(input => {
@@ -1579,8 +1594,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Try Web Share API first (works on mobile — allows saving to Google Drive, WhatsApp, etc.)
         if (navigator.canShare) {
-            const shareFileName = `${fileNameClean || 'Samyak'}.raaz.txt`;
-            const file = new File([blob], shareFileName, { type: 'text/plain' });
+            const shareFileName = `${fileNameClean || 'Samyak'}.raaz`;
+            const file = new File([blob], shareFileName, { type: 'application/octet-stream' });
             const shareData = { files: [file], title: shareFileName, text: `Samyak Project: ${subtitleText}` };
             
             if (navigator.canShare(shareData)) {
@@ -1747,6 +1762,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         switchActivePage(activePageIndex, false);
                         saveWorkspaceToLocalStorage();
                         renderPreview();
+                        updateDocumentTitle();
                         
                         alert("Project successfully loaded!");
                     } catch (err) {
@@ -2695,6 +2711,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 4. WORKSPACE CONTROLLERS & ACTIONS
+
+    function updateDocumentTitle() {
+        let subtitleText = (pagesData[0] && pagesData[0].subtitle) ? pagesData[0].subtitle.trim() : '';
+        if (!subtitleText) {
+            subtitleText = (pagesData[0] && pagesData[0].title) ? pagesData[0].title.trim() : '';
+        }
+        if (subtitleText) {
+            const cleanTitle = subtitleText.replace(/[^a-zA-Z0-9\u0900-\u097F\s\-]/g, '').trim();
+            document.title = cleanTitle || "Samyak";
+        } else {
+            document.title = "Samyak";
+        }
+    }
 
     // Save current user interface input values into pagesData array before switching
     function saveCurrentInputState() {
@@ -4318,6 +4347,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const coverContent = document.createElement('div');
         coverContent.className = 'cover-page-content';
+        const hasTagline = coverData.tagline && coverData.tagline.trim() !== '';
+        if (!hasTagline) {
+            coverContent.classList.add('tagline-empty');
+        }
 
         // Emblem (Feature 2)
         let emblemEl = null;
@@ -4357,6 +4390,9 @@ document.addEventListener('DOMContentLoaded', () => {
         taglineH3.textContent = coverData.tagline;
         taglineH3.style.setProperty('font-size', (coverData.taglineSize || 20) + 'px', 'important');
         taglineBox.appendChild(taglineH3);
+        if (!hasTagline) {
+            taglineBox.style.display = 'none';
+        }
 
         // Subtitle
         const subtitleEl = document.createElement('h2');
@@ -5121,6 +5157,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     switchActivePage(activePageIndex, false);
                     renderPreview();
                     
+                    updateDocumentTitle();
                     return true;
                 } catch (e) {
                     console.error("Error setting state from IndexedDB:", e);
