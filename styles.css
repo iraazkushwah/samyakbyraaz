@@ -3716,8 +3716,7 @@ body.light-mode .search-replace-panel {
 /* Shape-morphing Heading System */
 
 /* ROYAL NAVY THEME OVERRIDES */
-body.theme-royal-navy .section-heading-bar,
-body.theme-royal-navy .section-title {
+body.theme-royal-navy .section-heading-bar {
     background-color: transparent !important;
     background: transparent !important;
     color: var(--primary-color) !important;
@@ -3746,8 +3745,7 @@ body.theme-royal-navy .topic-title {
 }
 
 /* EMERALD FOREST THEME OVERRIDES */
-body.theme-emerald-cream .section-heading-bar,
-body.theme-emerald-cream .section-title {
+body.theme-emerald-cream .section-heading-bar {
     background: linear-gradient(135deg, var(--primary-color) 0%, #0d5f43 100%) !important;
     background-color: var(--primary-color) !important;
     color: #ffffff !important;
@@ -3773,8 +3771,7 @@ body.theme-emerald-cream .topic-title {
 }
 
 /* MIDNIGHT GOLD THEME OVERRIDES */
-body.theme-midnight-gold .section-heading-bar,
-body.theme-midnight-gold .section-title {
+body.theme-midnight-gold .section-heading-bar {
     background: linear-gradient(to right, var(--primary-color), rgba(21, 27, 38, 0.05)) !important;
     color: #ffffff !important;
     border-left: 6px solid var(--accent-color) !important;
@@ -4027,9 +4024,7 @@ body.theme-oasis-compact-v2 .topic-title span.diamond::before {
 
 /* 1. Gothic Royal Black - Heavy Burgundy Shield & Antique Gold Frames */
 body.theme-gothic-royal .section-heading-bar,
-body.theme-gothic-royal .section-title,
-body.theme-royal-compact-v2 .section-heading-bar,
-body.theme-royal-compact-v2 .section-title {
+body.theme-royal-compact-v2 .section-heading-bar {
     background: linear-gradient(135deg, #4a0e17 0%, #290509 100%) !important;
     color: #fffdf9 !important;
     border: 2px solid #b8860b !important;
@@ -4065,9 +4060,7 @@ body.theme-royal-compact-v2 .highlight-box {
 
 /* 2. Zen Kyoto & Ink - Calligraphy Torii Gates & Brush stroke borders */
 body.theme-kyoto-ink .section-heading-bar,
-body.theme-kyoto-ink .section-title,
-body.theme-kyoto-compact-ink .section-heading-bar,
-body.theme-kyoto-compact-ink .section-title {
+body.theme-kyoto-compact-ink .section-heading-bar {
     background: #111111 !important;
     color: #ffffff !important;
     border-top: 4px solid #b22222 !important;
@@ -4103,9 +4096,7 @@ body.theme-kyoto-compact-ink .highlight-box {
 
 /* 3. Athenian Temple Gold - Greek Marble Columns & Key Patterns */
 body.theme-athenian-gold .section-heading-bar,
-body.theme-athenian-gold .section-title,
-body.theme-athenian-compact-v2 .section-heading-bar,
-body.theme-athenian-compact-v2 .section-title {
+body.theme-athenian-compact-v2 .section-heading-bar {
     background: #ffffff !important;
     color: #0b2240 !important;
     border-top: 3px solid #c5a059 !important;
@@ -4141,9 +4132,7 @@ body.theme-athenian-compact-v2 .highlight-box {
 
 /* 4. Warm Autumn Vintage - Soft Copper Pills & Evergreen Ribbons */
 body.theme-autumn-vintage .section-heading-bar,
-body.theme-autumn-vintage .section-title,
-body.theme-autumn-compact-v2 .section-heading-bar,
-body.theme-autumn-compact-v2 .section-title {
+body.theme-autumn-compact-v2 .section-heading-bar {
     background: #5c2e16 !important;
     color: #fefaf4 !important;
     border-left: none !important;
@@ -4177,9 +4166,7 @@ body.theme-autumn-compact-v2 .highlight-box {
 
 /* 5. Maharaja Palace Gold - Royal Arch Scrolls & Marigold Lace */
 body.theme-maharaja-gold .section-heading-bar,
-body.theme-maharaja-gold .section-title,
-body.theme-maharaja-compact-v2 .section-heading-bar,
-body.theme-maharaja-compact-v2 .section-title {
+body.theme-maharaja-compact-v2 .section-heading-bar {
     background: #800020 !important;
     color: #fffdf0 !important;
     border: 2px solid #e6a100 !important;
@@ -4213,9 +4200,7 @@ body.theme-maharaja-compact-v2 .highlight-box {
 
 /* 6. Baroque Victorian Prestige - Ornate Bevel Frames & Teal Velvet */
 body.theme-victorian-prestige .section-heading-bar,
-body.theme-victorian-prestige .section-title,
-body.theme-victorian-compact-v2 .section-heading-bar,
-body.theme-victorian-compact-v2 .section-title {
+body.theme-victorian-compact-v2 .section-heading-bar {
     background: #004743 !important;
     color: #fafaf8 !important;
     border: 3px double #a3761a !important;
@@ -4247,9 +4232,7 @@ body.theme-victorian-compact-v2 .highlight-box {
 
 /* 7. Neo-Gothic Obsidian - Angular Polygon Cards & Copper Trim */
 body.theme-neo-gothic .section-heading-bar,
-body.theme-neo-gothic .section-title,
-body.theme-neo-gothic-compact .section-heading-bar,
-body.theme-neo-gothic-compact .section-title {
+body.theme-neo-gothic-compact .section-heading-bar {
     background: #1a1a1a !important;
     color: #ffffff !important;
     border-left: 6px solid #e8a838 !important;
@@ -4281,9 +4264,7 @@ body.theme-neo-gothic-compact .highlight-box {
 
 /* 8. Royal Sapphire Luxury - Glassmorphic Ribbons & Platinum Glow */
 body.theme-royal-sapphire .section-heading-bar,
-body.theme-royal-sapphire .section-title,
-body.theme-sapphire-compact-v2 .section-heading-bar,
-body.theme-sapphire-compact-v2 .section-title {
+body.theme-sapphire-compact-v2 .section-heading-bar {
     background: linear-gradient(135deg, #0f2b5c 0%, #1a3c73 100%) !important;
     color: #f5f8fa !important;
     border-radius: 4px !important;
@@ -4316,9 +4297,7 @@ body.theme-sapphire-compact-v2 .highlight-box {
 
 /* 9. Imperial Jade Emperor - Jade Scroll Shields & Golden Seals */
 body.theme-jade-emperor .section-heading-bar,
-body.theme-jade-emperor .section-title,
-body.theme-jade-compact-v2 .section-heading-bar,
-body.theme-jade-compact-v2 .section-title {
+body.theme-jade-compact-v2 .section-heading-bar {
     background: #0c3d2e !important;
     color: #faf8f0 !important;
     border: 2px solid #d4af37 !important;
@@ -4352,9 +4331,7 @@ body.theme-jade-compact-v2 .highlight-box {
 
 /* 10. Sun-Drenched Vintage Oasis - Clay Rounded Cards & Sand gold lines */
 body.theme-vintage-oasis .section-heading-bar,
-body.theme-vintage-oasis .section-title,
-body.theme-oasis-compact-v2 .section-heading-bar,
-body.theme-oasis-compact-v2 .section-title {
+body.theme-oasis-compact-v2 .section-heading-bar {
     background: #8a4b2d !important;
     color: #fefcf5 !important;
     border-bottom: 4px solid #c9a25d !important;
@@ -4385,9 +4362,7 @@ body.theme-oasis-compact-v2 .highlight-box {
 
 /* CYBERPUNK SYNTHWAVE THEME OVERRIDES */
 body.theme-cyber-synth .section-heading-bar,
-body.theme-cyber-synth .section-title,
-body.theme-synth-compact .section-heading-bar,
-body.theme-synth-compact .section-title {
+body.theme-synth-compact .section-heading-bar {
     background: #120e2e !important;
     color: #ffffff !important;
     border-left: 6px solid #00f0ff !important;
@@ -4422,9 +4397,7 @@ body.theme-synth-compact .highlight-box {
 
 /* MODERNIST GEOMETRIC ORIGAMI THEME OVERRIDES */
 body.theme-origami-slate .section-heading-bar,
-body.theme-origami-slate .section-title,
-body.theme-origami-compact .section-heading-bar,
-body.theme-origami-compact .section-title {
+body.theme-origami-compact .section-heading-bar {
     background: #ffffff !important;
     color: #0f172a !important;
     border: 1px solid #cbd5e1 !important;
@@ -4459,9 +4432,7 @@ body.theme-origami-compact .highlight-box {
 
 /* ROYAL INDIAN DURBAR THEME OVERRIDES */
 body.theme-royal-durbar .section-heading-bar,
-body.theme-royal-durbar .section-title,
-body.theme-durbar-compact .section-heading-bar,
-body.theme-durbar-compact .section-title {
+body.theme-durbar-compact .section-heading-bar {
     background: linear-gradient(135deg, #7c2d12 0%, #9a3412 100%) !important;
     background-color: #7c2d12 !important;
     color: #fffdf5 !important;
@@ -4502,10 +4473,8 @@ body.theme-durbar-compact .highlight-box {
 
 /* EMERALD EMPIRE / MUGHAL JADE OVERRIDES */
 body.theme-emerald-empire .section-heading-bar,
-body.theme-emerald-empire .section-title,
 body.theme-empire-compact .section-heading-bar,
-body.theme-emerald-empire .section-heading-bar:hover,
-body.theme-emerald-empire .section-title {
+body.theme-emerald-empire .section-heading-bar:hover {
     background: linear-gradient(135deg, #064e3b 0%, #0c674b 100%) !important;
     background-color: #064e3b !important;
     color: #f0fdf4 !important;
@@ -4547,10 +4516,8 @@ body.theme-empire-compact .highlight-box {
 
 /* MIDNIGHT GOTHIC VELVET OVERRIDES */
 body.theme-gothic-velvet .section-heading-bar,
-body.theme-gothic-velvet .section-title,
 body.theme-velvet-compact .section-heading-bar,
-body.theme-gothic-velvet .section-heading-bar:hover,
-body.theme-gothic-velvet .section-title {
+body.theme-gothic-velvet .section-heading-bar:hover {
     background: linear-gradient(to right, #2e1065, #4c1d95, #2e1065) !important;
     color: #fafaf9 !important;
     border-top: 3px solid #b45309 !important;
@@ -4584,10 +4551,8 @@ body.theme-velvet-compact .highlight-box {
 
 /* KYOTO IMPERIAL ZEN OVERRIDES */
 body.theme-kyoto-zen .section-heading-bar,
-body.theme-kyoto-zen .section-title,
 body.theme-zen-compact .section-heading-bar,
-body.theme-kyoto-zen .section-heading-bar:hover,
-body.theme-kyoto-zen .section-title {
+body.theme-kyoto-zen .section-heading-bar:hover {
     background: #ffffff !important;
     color: #991b1b !important;
     border-top: 5px solid #991b1b !important; /* Torii Zen Gate Top Bar */
@@ -5304,9 +5269,7 @@ body.theme-diamond-column-compact .topic-title span.diamond::before {
     font-size: 15px !important;
 }
 body.theme-diamond-column .section-heading-bar,
-body.theme-diamond-column .section-title,
-body.theme-diamond-column-compact .section-heading-bar,
-body.theme-diamond-column-compact .section-title {
+body.theme-diamond-column-compact .section-heading-bar {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
     color: #ffffff !important;
     border: none !important;
@@ -5369,9 +5332,7 @@ body.theme-raaz-compact .topic-title span.diamond::before {
 
 /* Ultra premium Section Heading */
 body.theme-raaz .section-heading-bar,
-body.theme-raaz .section-title,
-body.theme-raaz-compact .section-heading-bar,
-body.theme-raaz-compact .section-title {
+body.theme-raaz-compact .section-heading-bar {
     background: linear-gradient(270deg, #0a0a0a, #1a1a1a, #800020, #0a0a0a) !important;
     background-size: 300% 300% !important;
     color: #d4af37 !important;

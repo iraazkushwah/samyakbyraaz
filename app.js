@@ -566,6 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Reusable image compression helper using Canvas (reduces 1MB+ images to ~50KB for insane performance)
+    // Automatically preserves transparency for PNG/GIF/SVG/WebP to keep logos and watermarks crystal clear!
     function compressImage(base64Str, maxWidth, callback) {
         const img = new Image();
         img.src = base64Str;
@@ -585,8 +586,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
             
-            // Export as JPEG with 0.8 quality (extremely crisp but 95%+ smaller in size)
-            const compressed = canvas.toDataURL('image/jpeg', 0.8);
+            // Auto-detect format to preserve transparent backgrounds (PNG/GIF/SVG/WebP), otherwise use JPEG
+            let format = 'image/jpeg';
+            let quality = 0.8;
+            
+            if (base64Str.startsWith('data:image/png') || 
+                base64Str.startsWith('data:image/gif') || 
+                base64Str.startsWith('data:image/svg') || 
+                base64Str.startsWith('data:image/webp')) {
+                format = 'image/png';
+                quality = undefined; // PNG doesn't support quality parameter in toDataURL
+            }
+            
+            const compressed = canvas.toDataURL(format, quality);
             callback(compressed);
         };
         img.onerror = function() {
@@ -1001,6 +1013,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 uploadedImages[imgId] = currentUploadedBase64;
                 imageCounter++;
                 imgSource = imgId;
+                
+                // Snappy performance optimization: Save uploaded images to separate IndexedDB store immediately
+                saveToDB('samyak_uploaded_images', uploadedImages);
+                saveToDB('samyak_image_counter', imageCounter);
             } else {
                 imgSource = imageUrlInput.value.trim();
             }
@@ -1339,6 +1355,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update application state variables
         pagesData = compiledPages;
         uploadedImages = mergedImages;
+        // Save merged images to separate IndexedDB store
+        saveToDB('samyak_uploaded_images', uploadedImages);
         activePageIndex = 0;
 
         // Sync cover inputs in the UI
@@ -1552,9 +1570,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = URL.createObjectURL(blob);
         
         const a = document.createElement('a');
-        const docTitleClean = (pagesData[0] && pagesData[0].title) ? pagesData[0].title.replace(/[^a-zA-Z0-9\u0900-\u097F]/g, '_') : 'Samyak';
+        let subtitleText = (pagesData[0] && pagesData[0].subtitle) ? pagesData[0].subtitle.trim() : '';
+        if (!subtitleText) {
+            subtitleText = (pagesData[0] && pagesData[0].title) ? pagesData[0].title.trim() : 'Samyak';
+        }
+        
+        // Clean special characters to make it filesystem-safe, preserving Hindi characters (Devanagari \u0900-\u097F)
+        const fileNameClean = subtitleText.replace(/[^a-zA-Z0-9\u0900-\u097F\s\-]/g, '').trim().replace(/[\s\-]+/g, '_');
+        
         a.href = url;
-        a.download = `${docTitleClean}_project.raaz`;
+        a.download = `${fileNameClean || 'Samyak'}.raaz`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1593,6 +1618,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (socialSettings.placement === undefined) socialSettings.placement = 'split';
                         uploadedImages = state.uploadedImages || {};
                         imageCounter = state.imageCounter || 1;
+                        // Save imported images to separate IndexedDB store
+                        saveToDB('samyak_uploaded_images', uploadedImages);
+                        saveToDB('samyak_image_counter', imageCounter);
 
                         // Sync all UI inputs with the loaded data to prevent old UI values from corrupting new data
                         if (pagesData[0]) {
@@ -3749,8 +3777,22 @@ document.addEventListener('DOMContentLoaded', () => {
         pageNumText.style.color = customDesignSettings.pageNumColor || '#000000';
     }
 
+    // High-performance memoization cache to keep height estimations lightning fast
+    const heightEstimationCache = new Map();
+
     // Helper to estimate height of a parsed block of content to reduce layout thrashing
     function estimateBlockHeight(block, fontSize, lineSpacing, isTwoCol = false) {
+        const cacheKey = `${block.type}_${fontSize}_${lineSpacing}_${isTwoCol}_${block.markdown}`;
+        if (heightEstimationCache.has(cacheKey)) {
+            return heightEstimationCache.get(cacheKey);
+        }
+
+        const result = calculateBlockHeightRaw(block, fontSize, lineSpacing, isTwoCol);
+        heightEstimationCache.set(cacheKey, result);
+        return result;
+    }
+
+    function calculateBlockHeightRaw(block, fontSize, lineSpacing, isTwoCol = false) {
         const lineHeight = fontSize * lineSpacing;
         const text = block.markdown || '';
         const trimmed = text.trim();
@@ -4711,8 +4753,7 @@ document.addEventListener('DOMContentLoaded', () => {
             watermarkSettings,
             customDesignSettings,
             socialSettings,
-            uploadedImages,
-            imageCounter,
+            // Notice: uploadedImages and imageCounter are excluded to avoid massive IndexedDB write lag during typing
             spacingSettings: {
                 fontStyle: globalFontStyleSelect.value,
                 fontWeight: globalFontWeightSelect.value,
@@ -4876,69 +4917,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadWorkspaceFromLocalStorage() {
-        return getFromDB('samyak_workspace_state')
-            .then(state => {
-                if (!state) return false;
+        return Promise.all([
+            getFromDB('samyak_workspace_state'),
+            getFromDB('samyak_uploaded_images'),
+            getFromDB('samyak_image_counter')
+        ])
+        .then(([state, savedImages, savedCounter]) => {
+            heightEstimationCache.clear();
+            if (!state) return false;
+            
+            try {
+                pagesData = state.pagesData || [];
+                lastPageData = state.lastPageData || { title: 'THANK YOU', subtitle: 'Samyak', tagline: 'कोचिंग नहीं क्रांति' };
+                activePageIndex = state.activePageIndex || 0;
+                contentFontSize = state.contentFontSize || 13.5;
+                watermarkSettings = state.watermarkSettings || watermarkSettings;
+                customDesignSettings = state.customDesignSettings || customDesignSettings;
+                if (customDesignSettings.sectionAlignment === undefined) {
+                    customDesignSettings.sectionAlignment = 'left';
+                }
+                if (customDesignSettings.dividerColor === undefined) {
+                    customDesignSettings.dividerColor = '';
+                }
+                if (customDesignSettings.dividerStyle === undefined) {
+                    customDesignSettings.dividerStyle = 'dashed';
+                }
+                if (customDesignSettings.dividerThickness === undefined) {
+                    customDesignSettings.dividerThickness = '1.5';
+                }
+                if (customDesignSettings.endStarSymbol === undefined) {
+                    customDesignSettings.endStarSymbol = '✦';
+                }
+                if (customDesignSettings.endStarColor === undefined) {
+                    customDesignSettings.endStarColor = '';
+                }
+                if (customDesignSettings.endStarSize === undefined) {
+                    customDesignSettings.endStarSize = '18';
+                }
+                if (customDesignSettings.endStarPulse === undefined) {
+                    customDesignSettings.endStarPulse = true;
+                }
+                if (customDesignSettings.sectionShape === undefined) {
+                    customDesignSettings.sectionShape = 'rectangle';
+                }
+                if (customDesignSettings.topicIcon === undefined) {
+                    customDesignSettings.topicIcon = 'orange-diamond';
+                }
+                if (customDesignSettings.bulletStyle === undefined) {
+                    customDesignSettings.bulletStyle = 'classic';
+                }
+                if (customDesignSettings.pageMarginX === undefined) {
+                    customDesignSettings.pageMarginX = '8';
+                }
+                if (customDesignSettings.pageMarginY === undefined) {
+                    customDesignSettings.pageMarginY = '6';
+                }
+                if (customDesignSettings.pagePaddingX === undefined) {
+                    customDesignSettings.pagePaddingX = '6';
+                }
+                if (customDesignSettings.pagePaddingY === undefined) {
+                    customDesignSettings.pagePaddingY = '4';
+                }
+                socialSettings = state.socialSettings || { telegramText: '', youtubeText: '' };
+                if (socialSettings.telegramText === '@samyak') socialSettings.telegramText = '';
+                if (socialSettings.youtubeText === 'Samyak Coaching') socialSettings.youtubeText = '';
+                if (socialSettings.fontSize === undefined) socialSettings.fontSize = 11;
+                if (socialSettings.placement === undefined) socialSettings.placement = 'split';
                 
-                try {
-                    pagesData = state.pagesData || [];
-                    lastPageData = state.lastPageData || { title: 'THANK YOU', subtitle: 'Samyak', tagline: 'कोचिंग नहीं क्रांति' };
-                    activePageIndex = state.activePageIndex || 0;
-                    contentFontSize = state.contentFontSize || 13.5;
-                    watermarkSettings = state.watermarkSettings || watermarkSettings;
-                    customDesignSettings = state.customDesignSettings || customDesignSettings;
-                    if (customDesignSettings.sectionAlignment === undefined) {
-                        customDesignSettings.sectionAlignment = 'left';
-                    }
-                    if (customDesignSettings.dividerColor === undefined) {
-                        customDesignSettings.dividerColor = '';
-                    }
-                    if (customDesignSettings.dividerStyle === undefined) {
-                        customDesignSettings.dividerStyle = 'dashed';
-                    }
-                    if (customDesignSettings.dividerThickness === undefined) {
-                        customDesignSettings.dividerThickness = '1.5';
-                    }
-                    if (customDesignSettings.endStarSymbol === undefined) {
-                        customDesignSettings.endStarSymbol = '✦';
-                    }
-                    if (customDesignSettings.endStarColor === undefined) {
-                        customDesignSettings.endStarColor = '';
-                    }
-                    if (customDesignSettings.endStarSize === undefined) {
-                        customDesignSettings.endStarSize = '18';
-                    }
-                    if (customDesignSettings.endStarPulse === undefined) {
-                        customDesignSettings.endStarPulse = true;
-                    }
-                    if (customDesignSettings.sectionShape === undefined) {
-                        customDesignSettings.sectionShape = 'rectangle';
-                    }
-                    if (customDesignSettings.topicIcon === undefined) {
-                        customDesignSettings.topicIcon = 'orange-diamond';
-                    }
-                    if (customDesignSettings.bulletStyle === undefined) {
-                        customDesignSettings.bulletStyle = 'classic';
-                    }
-                    if (customDesignSettings.pageMarginX === undefined) {
-                        customDesignSettings.pageMarginX = '8';
-                    }
-                    if (customDesignSettings.pageMarginY === undefined) {
-                        customDesignSettings.pageMarginY = '6';
-                    }
-                    if (customDesignSettings.pagePaddingX === undefined) {
-                        customDesignSettings.pagePaddingX = '6';
-                    }
-                    if (customDesignSettings.pagePaddingY === undefined) {
-                        customDesignSettings.pagePaddingY = '4';
-                    }
-                    socialSettings = state.socialSettings || { telegramText: '', youtubeText: '' };
-                    if (socialSettings.telegramText === '@samyak') socialSettings.telegramText = '';
-                    if (socialSettings.youtubeText === 'Samyak Coaching') socialSettings.youtubeText = '';
-                    if (socialSettings.fontSize === undefined) socialSettings.fontSize = 11;
-                    if (socialSettings.placement === undefined) socialSettings.placement = 'split';
-                    uploadedImages = state.slateImages || state.uploadedImages || {};
-                    imageCounter = state.imageCounter || 1;
+                // Read from separate image store or fallback to the embedded state properties for backward compatibility
+                uploadedImages = savedImages || state.slateImages || state.uploadedImages || {};
+                imageCounter = savedCounter || state.imageCounter || 1;
 
                     // Sync all UI inputs with the loaded data to prevent old UI values from corrupting new data
                     if (pagesData[0]) {
@@ -5126,6 +5174,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear uploaded images
         uploadedImages = {};
         imageCounter = 1;
+        saveToDB('samyak_uploaded_images', {});
+        saveToDB('samyak_image_counter', 1);
+        heightEstimationCache.clear();
         
         // Switch to Cover Tab
         switchActivePage(0);
