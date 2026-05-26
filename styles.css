@@ -2835,17 +2835,28 @@ strong {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(4px);
-    display: none;
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2000;
-    transition: none;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                backdrop-filter 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal-overlay.active {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    background-color: rgba(10, 10, 15, 0.82); /* Rich premium glass shade */
+    backdrop-filter: blur(14px); /* Modern frosted-glass look */
+    -webkit-backdrop-filter: blur(14px);
 }
 
 /* Modal Content */
@@ -2855,22 +2866,17 @@ strong {
     border-radius: var(--border-radius-lg);
     width: 480px;
     max-width: 90%;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    animation: modal-appear 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Elegant iOS elastic spring pop */
 }
 
-@keyframes modal-appear {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
 }
 
 .modal-header {
@@ -7039,7 +7045,7 @@ body.light-mode .premium-slider-group input[type="range"]::-webkit-slider-thumb 
 
 .input-grid-2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 12px;
 }
 
