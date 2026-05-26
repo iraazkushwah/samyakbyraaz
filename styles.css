@@ -6348,6 +6348,37 @@ body.theme-raaz-compact .page-content p.body-text {
     }
 }
 
+/* Mobile/Tablet Landscape Side-by-Side Override */
+@media screen and (max-width: 950px) and (orientation: landscape) {
+    .app-container {
+        display: flex !important;
+        flex-direction: row !important;
+    }
+
+    .editor-panel {
+        width: 45vw !important;
+        max-width: 50vw !important;
+        min-width: 280px !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        display: flex !important;
+    }
+
+    .preview-panel {
+        position: relative !important;
+        transform: translateX(0) !important;
+        width: 55vw !important;
+        height: 100vh !important;
+        display: flex !important;
+        box-shadow: none !important;
+        z-index: 10 !important;
+    }
+
+    .mobile-preview-toggle-btn,
+    .mobile-preview-close-btn {
+        display: none !important;
+    }
+}
+
 /* ==========================================================================
    GLOBAL PREMIUM SCROLLBAR STYLING
    ========================================================================== */

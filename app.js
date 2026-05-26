@@ -2152,12 +2152,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Auto-fit page zoom when rotating or resizing on mobile
-    window.addEventListener('resize', () => {
-        if (window.innerWidth <= 768) {
-            let optimalZoom = Math.floor((window.innerWidth - 32) / 794 * 100);
-            zoomLevel = Math.max(35, Math.min(optimalZoom, 60));
+    function handleAutoZoom() {
+        const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        if (window.innerWidth <= 950) {
+            let widthToFit = window.innerWidth;
+            if (isLandscape) {
+                // In landscape side-by-side, the preview panel gets 55vw of width
+                widthToFit = window.innerWidth * 0.55;
+            }
+            let optimalZoom = Math.floor((widthToFit - 32) / 794 * 100);
+            zoomLevel = Math.max(30, Math.min(optimalZoom, 60));
             updateZoom();
         }
+    }
+
+    window.addEventListener('resize', handleAutoZoom);
+    window.addEventListener('orientationchange', () => {
+        setTimeout(handleAutoZoom, 200);
     });
 
     // Toolbar Customize Edit Mode (Option B: Clicking swaps buttons)
