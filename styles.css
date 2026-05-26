@@ -2988,6 +2988,8 @@ strong {
     display: flex;
     flex-direction: column;
     gap: 14px;
+    max-height: 65vh;
+    overflow-y: auto;
 }
 
 .modal-footer {
@@ -7499,5 +7501,48 @@ body.light-mode .premium-slider-group input[type="range"]::-webkit-slider-thumb 
     border-color: var(--ui-accent) !important;
     box-shadow: 0 0 0 2.5px rgba(245, 158, 11, 0.4), 0 4px 10px rgba(0,0,0,0.3);
     transform: scale(1.05);
+}
+
+/* Custom Color Picker Short Screen / Mobile Landscape Optimization */
+@media screen and (max-height: 520px) {
+    .color-picker-modal-content {
+        max-width: 90% !important;
+        width: 420px !important;
+    }
+
+    .color-picker-modal-content .modal-body {
+        padding: 10px 16px !important;
+        gap: 8px !important;
+        max-height: 48vh !important;
+    }
+    
+    .color-picker-modal-content .swatches-grid {
+        grid-template-columns: repeat(8, 1fr) !important;
+        gap: 6px !important;
+    }
+    
+    .color-picker-modal-content .color-swatch-btn {
+        height: 28px !important;
+    }
+    
+    .color-picker-modal-content .color-preview-row {
+        padding: 6px 10px !important;
+        margin-bottom: 4px !important;
+        gap: 10px !important;
+    }
+    
+    .color-picker-modal-content .color-preview-box {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    
+    .color-picker-modal-content .color-input-field-wrapper {
+        gap: 2px !important;
+    }
+    
+    .color-picker-modal-content .hex-text-input {
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+    }
 }
 
