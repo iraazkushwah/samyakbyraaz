@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Last Page State
     let lastPageData = {
         title: 'THANK YOU',
-        subtitle: 'सम्यक्',
+        subtitle: 'Samyak',
         tagline: 'कोचिंग नहीं क्रांति'
     };
 
@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Premium Watermark State
     let watermarkSettings = {
         type: 'none',       // 'none' | 'text' | 'image'
-        text: 'सम्यक्',
+        text: 'Samyak',
         imageSrc: '',       // Base64 string of uploaded logo image
         position: 'center',  // 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
         rotation: '-45',     // Angle in degrees
@@ -932,7 +932,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Pre-populate metadata fields from current cover page
             if (pagesData[0]) {
-                compiledTitleInput.value = pagesData[0].title || 'सम्यक्';
+                compiledTitleInput.value = pagesData[0].title || 'Samyak';
                 compiledTaglineInput.value = pagesData[0].tagline || 'कोचिंग नहीं क्रांति';
                 compiledSubtitleInput.value = pagesData[0].subtitle || 'राजस्थान समसामयिकी';
             }
@@ -1003,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Promise.all(promises)
                 .then((fileStates) => {
                     const newMeta = {
-                        title: compiledTitleInput.value.trim() || 'सम्यक्',
+                        title: compiledTitleInput.value.trim() || 'Samyak',
                         tagline: compiledTaglineInput.value.trim() || 'कोचिंग नहीं क्रांति',
                         subtitle: compiledSubtitleInput.value.trim() || 'राजस्थान समसामयिकी'
                     };
@@ -1401,7 +1401,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Apply states
                         pagesData = state.pagesData;
-                        lastPageData = state.lastPageData || { title: 'THANK YOU', subtitle: 'सम्यक्', tagline: 'कोचिंग नहीं क्रांति' };
+                        lastPageData = state.lastPageData || { title: 'THANK YOU', subtitle: 'Samyak', tagline: 'कोचिंग नहीं क्रांति' };
                         activePageIndex = state.activePageIndex || 0;
                         contentFontSize = state.contentFontSize || 13.5;
                         watermarkSettings = state.watermarkSettings || watermarkSettings;
@@ -1421,7 +1421,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         if (lastPageData) {
                             lastTitleInput.value = lastPageData.title || 'THANK YOU';
-                            lastSubtitleInput.value = lastPageData.subtitle || 'सम्यक्';
+                            lastSubtitleInput.value = lastPageData.subtitle || 'Samyak';
                             lastTaglineInput.value = lastPageData.tagline || 'कोचिंग नहीं क्रांति';
                         }
 
@@ -4505,7 +4505,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 try {
                     pagesData = state.pagesData || [];
-                    lastPageData = state.lastPageData || { title: 'THANK YOU', subtitle: 'सम्यक्', tagline: 'कोचिंग नहीं क्रांति' };
+                    lastPageData = state.lastPageData || { title: 'THANK YOU', subtitle: 'Samyak', tagline: 'कोचिंग नहीं क्रांति' };
                     activePageIndex = state.activePageIndex || 0;
                     contentFontSize = state.contentFontSize || 13.5;
                     watermarkSettings = state.watermarkSettings || watermarkSettings;
@@ -4553,7 +4553,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Sync all UI inputs with the loaded data to prevent old UI values from corrupting new data
                     if (pagesData[0]) {
-                        if (pagesData[0].title === 'सम्यक्') pagesData[0].title = '';
+                        if (pagesData[0].title === 'सम्यक्' || pagesData[0].title === 'Samyak') pagesData[0].title = '';
                         if (pagesData[0].tagline === 'कोचिंग नहीं क्रांति') pagesData[0].tagline = '';
                         if (pagesData[0].subtitle === 'राजस्थान समसामयिकी : 1-10 मई' || pagesData[0].subtitle === 'राजस्थान समसामयिकी') pagesData[0].subtitle = '';
                         
@@ -4564,7 +4564,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     if (lastPageData) {
                         lastTitleInput.value = lastPageData.title || 'THANK YOU';
-                        lastSubtitleInput.value = lastPageData.subtitle || 'सम्यक्';
+                        lastSubtitleInput.value = lastPageData.subtitle || 'Samyak';
                         lastTaglineInput.value = lastPageData.tagline || 'कोचिंग नहीं क्रांति';
                     }
 
@@ -4848,7 +4848,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         lastPageData = {
             title: 'THANK YOU',
-            subtitle: 'सम्यक्',
+            subtitle: 'Samyak',
             tagline: 'कोचिंग नहीं क्रांति'
         };
 
@@ -4872,8 +4872,8 @@ document.addEventListener('DOMContentLoaded', () => {
         watermarkTypeSelect.value = 'none';
         watermarkSettings.type = 'none';
         watermarkSettings.imageSrc = '';
-        watermarkSettings.text = 'सम्यक्';
-        watermarkTextInput.value = 'सम्यक्';
+        watermarkSettings.text = 'Samyak';
+        watermarkTextInput.value = 'Samyak';
         watermarkPositionSelect.value = 'center';
         watermarkSettings.position = 'center';
         watermarkRotationSelect.value = '-45';
@@ -4893,7 +4893,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Reset End Page Settings
         lastTitleInput.value = 'THANK YOU';
-        lastSubtitleInput.value = 'सम्यक्';
+        lastSubtitleInput.value = 'Samyak';
         lastTaglineInput.value = 'कोचिंग नहीं क्रांति';
 
         // Reset Custom Design Settings in UI and State

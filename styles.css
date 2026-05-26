@@ -781,13 +781,13 @@ body {
 }
 
 .logo-text h1 {
-    font-size: 16px;
-    font-weight: 800;
-    font-family: var(--font-ui);
+    font-size: 17px;
+    font-weight: 900;
+    font-family: 'Product Sans', 'Google Sans', 'Outfit', 'Poppins', sans-serif;
     background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .logo-text p {

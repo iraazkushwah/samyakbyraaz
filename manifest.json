@@ -1,6 +1,6 @@
 {
-  "name": "सम्यक् नोट्स मेकर",
-  "short_name": "सम्यक्",
+  "name": "Samyak",
+  "short_name": "Samyak",
   "description": "Progressive Web App for compiling and compiling monthly current affairs magazines and educational notes.",
   "start_url": "./index.html",
   "display": "standalone",
