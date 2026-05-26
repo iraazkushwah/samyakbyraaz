@@ -5884,6 +5884,27 @@ body.theme-raaz-compact .page-content p.body-text {
 }
 
 @media screen and (max-width: 768px) {
+    /* Align floating editor controls on the exact same line as the mobile preview toggle button */
+    .floating-editor-controls {
+        position: fixed !important;
+        bottom: calc(30px + env(safe-area-inset-bottom, 0px)) !important;
+        left: calc(24px + env(safe-area-inset-left, 0px)) !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+        z-index: 1800 !important;
+    }
+
+    /* Make options settings layout single-column to prevent overflow on mobile devices */
+    .options-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .option-item.full-width-opt {
+        grid-column: span 1 !important;
+    }
+
     /* Hide resizer handle on mobile */
     .resize-handle {
         display: none !important;

@@ -2590,6 +2590,8 @@ document.addEventListener('DOMContentLoaded', () => {
         customDesignSettings.pageNumColor = primary;
     }
 
+
+
     // 4. WORKSPACE CONTROLLERS & ACTIONS
 
     // Save current user interface input values into pagesData array before switching
