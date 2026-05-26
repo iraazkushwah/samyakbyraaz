@@ -52,7 +52,7 @@ To test the Progressive Web App (PWA) capabilities and service worker caching, t
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/yourusername/samyakraaz.git
-   cd samyakraaz
+   cd samyakbyraaz
    ```
 
 2. **Serve the application:**
