@@ -6473,4 +6473,131 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('pagehide', () => {
         saveWorkspaceToLocalStorage();
     });
+
+    // ==========================================================================
+    // SAMYAK PREMIUM MOBILE-FRIENDLY COLOR PICKER SYSTEM
+    // ==========================================================================
+    let activeColorInputTarget = null;
+    const customColorPickerModal = document.getElementById('custom-color-picker-modal');
+    const colorPickerPreviewBox = document.getElementById('color-picker-preview-box');
+    const colorPickerHexInput = document.getElementById('color-picker-hex-input');
+    const closeColorPickerBtn = document.getElementById('close-color-picker-btn');
+    const applyCustomColorBtn = document.getElementById('apply-custom-color-btn');
+    const colorPickerTitle = document.getElementById('color-picker-title');
+    const swatchesGrid = customColorPickerModal ? customColorPickerModal.querySelector('.swatches-grid') : null;
+
+    const samyakSwatches = [
+        '#850F0F', '#C5A353', '#1D6EA5', '#083C2A',
+        '#0F172A', '#0E2743', '#B45309', '#C2410C',
+        '#FF007F', '#00F0FF', '#991B1B', '#271A15',
+        '#5C1D3B', '#111111', '#4B5563', '#FFFFFF'
+    ];
+
+    if (customColorPickerModal && colorPickerPreviewBox && colorPickerHexInput) {
+        // Intercept native color pickers
+        const nativeColorInputs = document.querySelectorAll('input[type="color"]');
+        nativeColorInputs.forEach(input => {
+            input.addEventListener('click', (e) => {
+                e.preventDefault();
+                activeColorInputTarget = input;
+                
+                // Retrieve visual label
+                let labelText = 'Pick Color';
+                const parentItem = input.closest('.option-item');
+                if (parentItem) {
+                    const labelEl = parentItem.querySelector('label');
+                    if (labelEl) labelText = labelEl.textContent.trim();
+                }
+                colorPickerTitle.textContent = labelText || 'Pick Premium Color';
+                
+                const currentColor = input.value || '#000000';
+                updateCustomPickerColor(currentColor);
+                
+                // Build swatches
+                if (swatchesGrid) {
+                    swatchesGrid.innerHTML = '';
+                    samyakSwatches.forEach(hex => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'color-swatch-btn';
+                        btn.style.backgroundColor = hex;
+                        btn.setAttribute('data-color', hex);
+                        btn.title = hex;
+                        
+                        if (hex.toUpperCase() === currentColor.toUpperCase()) {
+                            btn.classList.add('active');
+                        }
+                        
+                        btn.addEventListener('click', () => {
+                            swatchesGrid.querySelectorAll('.color-swatch-btn').forEach(b => b.classList.remove('active'));
+                            btn.classList.add('active');
+                            updateCustomPickerColor(hex);
+                        });
+                        
+                        swatchesGrid.appendChild(btn);
+                    });
+                }
+                
+                customColorPickerModal.classList.add('active');
+            });
+        });
+
+        function updateCustomPickerColor(hex) {
+            colorPickerPreviewBox.style.backgroundColor = hex;
+            colorPickerHexInput.value = hex.toUpperCase();
+        }
+
+        colorPickerHexInput.addEventListener('input', () => {
+            let val = colorPickerHexInput.value.trim();
+            if (val && !val.startsWith('#')) {
+                val = '#' + val;
+                colorPickerHexInput.value = val;
+            }
+            if (/^#[A-Fa-f0-9]{6}$/.test(val)) {
+                colorPickerPreviewBox.style.backgroundColor = val;
+                
+                // Sync swatches active state
+                if (swatchesGrid) {
+                    swatchesGrid.querySelectorAll('.color-swatch-btn').forEach(b => {
+                        b.classList.toggle('active', b.getAttribute('data-color').toUpperCase() === val.toUpperCase());
+                    });
+                }
+            }
+        });
+
+        if (closeColorPickerBtn) {
+            closeColorPickerBtn.addEventListener('click', () => {
+                customColorPickerModal.classList.remove('active');
+            });
+        }
+
+        customColorPickerModal.addEventListener('click', (e) => {
+            if (e.target === customColorPickerModal) {
+                customColorPickerModal.classList.remove('active');
+            }
+        });
+
+        if (applyCustomColorBtn) {
+            applyCustomColorBtn.addEventListener('click', () => {
+                let val = colorPickerHexInput.value.trim();
+                if (val && !val.startsWith('#')) val = '#' + val;
+                
+                if (/^#[A-Fa-f0-9]{6}$/.test(val)) {
+                    if (activeColorInputTarget) {
+                        activeColorInputTarget.value = val;
+                        
+                        // Fire both input and change listeners in app.js
+                        const inputEvent = new Event('input', { bubbles: true });
+                        activeColorInputTarget.dispatchEvent(inputEvent);
+                        
+                        const changeEvent = new Event('change', { bubbles: true });
+                        activeColorInputTarget.dispatchEvent(changeEvent);
+                    }
+                    customColorPickerModal.classList.remove('active');
+                } else {
+                    alert('Please enter a valid Hex color code (e.g. #850F0F)');
+                }
+            });
+        }
+    }
 });

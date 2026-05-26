@@ -1140,6 +1140,37 @@
         </div>
     </div>
 
+    <!-- Custom Premium Mobile-Friendly Color Picker Modal -->
+    <div id="custom-color-picker-modal" class="modal-overlay">
+        <div class="modal-content color-picker-modal-content">
+            <div class="modal-header">
+                <h3 id="color-picker-title">Pick Premium Color</h3>
+                <button class="close-btn" id="close-color-picker-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Selected color preview and Hex input -->
+                <div class="color-preview-row">
+                    <div id="color-picker-preview-box" class="color-preview-box"></div>
+                    <div class="color-input-field-wrapper">
+                        <label for="color-picker-hex-input">Hex Code:</label>
+                        <input type="text" id="color-picker-hex-input" class="hex-text-input" placeholder="#FFFFFF" maxlength="7" autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+                
+                <!-- Curated Premium Swatches Grid -->
+                <div class="swatches-section">
+                    <h4 class="swatches-title">⚜️ Samyak Premium Swatches</h4>
+                    <div class="swatches-grid">
+                        <!-- Swatches generated dynamically in JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="apply-custom-color-btn" class="search-action-btn" style="background-color: var(--ui-accent); color: #000; font-weight: 700;">Apply Color</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Premium Layout Optimizer Loading Overlay -->
     <div id="loading-overlay" class="loading-overlay">
         <div class="loading-spinner-container">
