@@ -2026,6 +2026,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function showPrintToastTip() {
+        const existing = document.getElementById('samyak-print-toast');
+        if (existing) existing.remove();
+
+        const toast = document.createElement('div');
+        toast.id = 'samyak-print-toast';
+        toast.style.cssText = `
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: linear-gradient(135deg, #1e1b4b 0%, #311005 100%);
+            border: 2.5px solid #f59e0b;
+            color: #ffffff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 158, 11, 0.2);
+            z-index: 99999;
+            font-family: 'Poppins', 'Outfit', sans-serif;
+            font-size: 13.5px;
+            line-height: 1.5;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            pointer-events: none;
+        `;
+        
+        toast.innerHTML = `
+            <div style="font-weight: 800; color: #f59e0b; font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <span>💡</span> SAMYAK PRINT GUIDE (सटीक प्रिंट गाइड)
+            </div>
+            <div style="text-align: left; margin-bottom: 6px; font-weight: 500;">
+                <strong>1. Margins (मार्जिन):</strong> Print विंडो में Margins को <strong style="color: #f59e0b; text-decoration: underline;">"None"</strong> ही चुनें।
+            </div>
+            <div style="text-align: left; font-weight: 500;">
+                <strong>2. Headers & Footers:</strong> <strong style="color: #f59e0b;">"Headers and footers"</strong> विकल्प को <strong style="color: #ef4444;">Uncheck (बंद)</strong> करें।
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        toast.offsetHeight; // trigger reflow
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(-20px)';
+            setTimeout(() => toast.remove(), 400);
+        }, 9000);
+    }
+
     // Highly robust PDF print button action
     if (printPdfBtn) {
         printPdfBtn.addEventListener('click', () => {
@@ -2033,8 +2086,11 @@ document.addEventListener('DOMContentLoaded', () => {
             saveCurrentInputState();
             // 2. Re-render standard layouts to ensure perfect content alignment
             renderPreview();
+            
+            // Show dynamic print guide toast
+            showPrintToastTip();
+            
             // 3. Wait for browser to fully paint ALL pages before opening print dialog
-            //    Double rAF ensures the browser has committed a full paint cycle
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     setTimeout(() => {

@@ -2684,7 +2684,7 @@ strong {
         padding: 0 !important;
     }
     
-    .editor-panel, .preview-header, .floating-stats, .floating-editor-controls, .fab-container, .fab-trigger-btn, .fab-sub-btn, .resize-handle, .sidebar-toggle-btn, .mobile-preview-toggle-btn, .mobile-preview-close-btn {
+    .editor-panel, .preview-header, .floating-stats, .floating-editor-controls, .fab-container, .fab-trigger-btn, .fab-sub-btn, .resize-handle, .sidebar-toggle-btn, .mobile-preview-toggle-btn, .mobile-preview-close-btn, #samyak-print-toast {
         display: none !important;
     }
 
