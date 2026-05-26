@@ -1567,9 +1567,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const jsonStr = JSON.stringify(state, null, 2);
         const blob = new Blob([jsonStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
         
-        const a = document.createElement('a');
         let subtitleText = (pagesData[0] && pagesData[0].subtitle) ? pagesData[0].subtitle.trim() : '';
         if (!subtitleText) {
             subtitleText = (pagesData[0] && pagesData[0].title) ? pagesData[0].title.trim() : 'Samyak';
@@ -1577,9 +1575,35 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Clean special characters to make it filesystem-safe, preserving Hindi characters (Devanagari \u0900-\u097F)
         const fileNameClean = subtitleText.replace(/[^a-zA-Z0-9\u0900-\u097F\s\-]/g, '').trim().replace(/[\s\-]+/g, '_');
-        
+        const fileName = `${fileNameClean || 'Samyak'}.raaz`;
+
+        // Try Web Share API first (works on mobile — allows saving to Google Drive, WhatsApp, etc.)
+        if (navigator.canShare) {
+            const file = new File([blob], fileName, { type: 'application/json' });
+            const shareData = { files: [file], title: fileName, text: `Samyak Project: ${subtitleText}` };
+            
+            if (navigator.canShare(shareData)) {
+                navigator.share(shareData)
+                    .then(() => console.log('Project shared successfully'))
+                    .catch((err) => {
+                        // User cancelled share or error — fallback to download
+                        if (err.name !== 'AbortError') {
+                            downloadFallback(blob, fileName);
+                        }
+                    });
+                return;
+            }
+        }
+
+        // Fallback: regular file download (Desktop browsers)
+        downloadFallback(blob, fileName);
+    }
+
+    function downloadFallback(blob, fileName) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
         a.href = url;
-        a.download = `${fileNameClean || 'Samyak'}.raaz`;
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -5959,8 +5983,8 @@ document.addEventListener('DOMContentLoaded', () => {
             { value: 'synth-compact', name: '🔮 Cyber Synthwave - Compact', category: 'morphing', colors: ['#0c0721', '#ff007f', '#00f0ff'] },
             { value: 'origami-slate', name: '📐 Morphing Modern Origami', category: 'morphing', colors: ['#1e293b', '#94a3b8', '#0f766e'] },
             { value: 'origami-compact', name: '📐 Modern Origami - Compact', category: 'morphing', colors: ['#1e293b', '#94a3b8', '#0f766e'] },
-            { value: 'royal-durbar', name: '👑 Morphing Royal Durbar', category: 'morphing', colors: ['#7c2d12', '#d97706', '#ea580c'] },
-            { value: 'durbar-compact', name: '👑 Royal Durbar - Compact', category: 'morphing', colors: ['#7c2d12', '#d97706', '#ea580c'] },
+            { value: 'royal-durbar', name: '👑 Lokbandhu Official', category: 'morphing', colors: ['#7a3109', '#de790f', '#b85d08'] },
+            { value: 'durbar-compact', name: '👑 Lokbandhu Official - Compact', category: 'morphing', colors: ['#7a3109', '#de790f', '#b85d08'] },
             { value: 'emerald-empire', name: '🔱 Morphing Emerald Empire', category: 'morphing', colors: ['#064e3b', '#d97706', '#059669'] },
             { value: 'empire-compact', name: '🔱 Emerald Empire - Compact', category: 'morphing', colors: ['#064e3b', '#d97706', '#059669'] },
             { value: 'gothic-velvet', name: '🏰 Morphing Gothic Velvet', category: 'morphing', colors: ['#2e1065', '#b45309', '#db2777'] },
