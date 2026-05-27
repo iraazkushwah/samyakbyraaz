@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dynamic Toolbar Layout Configurations & Sanitization
     const defaultToolbarLayout = {
-        main: ['btn-section', 'btn-topic', 'btn-bullet', 'btn-note', 'highlight-green-btn', 'highlight-pink-btn', 'box-style-select'],
+        main: ['btn-section', 'btn-topic', 'btn-bullet', 'btn-note', 'highlight-green-btn', 'highlight-pink-btn', 'btn-factbox', 'box-style-select'],
         tray: ['btn-pagebreak', 'btn-columnbreak', 'insert-image-btn', 'insert-table-btn', 'btn-search-toggle', 'btn-help-shortcuts']
     };
 
@@ -2165,7 +2165,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.addEventListener('resize', handleAutoZoom);
+    let resizeScheduled = false;
+    window.addEventListener('resize', () => {
+        if (!resizeScheduled) {
+            resizeScheduled = true;
+            requestAnimationFrame(() => {
+                handleAutoZoom();
+                resizeScheduled = false;
+            });
+        }
+    });
     window.addEventListener('orientationchange', () => {
         setTimeout(handleAutoZoom, 200);
     });
@@ -2212,6 +2221,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 insertWrappedAtCursor(pageContentInput, prefix, suffix);
                 pagesData[activePageIndex].text = pageContentInput.value;
+                renderPreview(); // Ensure live preview is instantly updated!
                 updateStats();
                 saveWorkspaceToLocalStorage();
             }

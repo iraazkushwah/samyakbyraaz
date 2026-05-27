@@ -1843,6 +1843,11 @@ body.light-mode .header-stats {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+.a4-page:last-child {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
 /* Elegant Inset Double Borders - HIDDEN BY USER REQUEST */
 .a4-page::before {
     content: '';
@@ -2740,6 +2745,11 @@ strong {
         border: none !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+    }
+
+    .a4-page:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
     }
 
     .a4-page::before {
