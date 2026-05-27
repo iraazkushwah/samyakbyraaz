@@ -2347,8 +2347,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const selectedStyle = boxStyleSelect.value;
             if (selectedStyle && activePageIndex > 0) {
-                const prefix = `[${selectedStyle}]\n`;
-                const suffix = '\n[/box]';
+                let prefix = `[${selectedStyle}]\n`;
+                let suffix = '\n[/box]';
+                
+                // UPSC Premium Note-Taking Templates
+                if (selectedStyle === 'box-upsc-mains') {
+                    prefix = `[box-upsc-mains]\n**प्रश्न (Mains Question):** \n- **परिचय (Introduction):** \n- **मुख्य भाग (Core Arguments):** \n  - **पक्ष में तर्क (Arguments For):** \n    1. \n    2. \n  - **विपक्ष में तर्क (Arguments Against):** \n    1. \n    2. \n- **निष्कर्ष/आगे की राह (Conclusion / Way Forward):** \n`;
+                } else if (selectedStyle === 'box-upsc-editorial') {
+                    prefix = `[box-upsc-editorial]\n**संपादकीय मत (Editorial Opinion):** \n"यहाँ समिति (e.g. 2nd ARC, Sarkaria Commission), राष्ट्रीय रिपोर्ट, या विशेषज्ञ का मत दर्ज करें।"\n— (स्रोत/नाम)\n`;
+                } else if (selectedStyle === 'box-upsc-syllabus') {
+                    prefix = `[box-upsc-syllabus]\n🎯 **GS PAPER:** GS-III | **TOPIC:** Inclusive Growth, Agricultural Reforms & Food Security\n`;
+                } else if (selectedStyle === 'box-upsc-marginal') {
+                    prefix = `[box-upsc-marginal]\n💡 **महत्वपूर्ण अवधारणा (Key Concept):**\n- \n`;
+                }
                 
                 insertWrappedAtCursor(pageContentInput, prefix, suffix);
                 pagesData[activePageIndex].text = pageContentInput.value;
@@ -4777,8 +4788,126 @@ document.addEventListener('DOMContentLoaded', () => {
         if (themeName !== 'maroon-gold') {
             document.body.classList.add(`theme-${themeName}`);
         }
-        // Instantly sync custom design panel values to match the theme color properties!
-        syncDesignControlsWithTheme();
+
+        // Intercept Coaching Brand Themes
+        if (themeName && themeName.startsWith('coaching-')) {
+            const val = themeName.replace('coaching-', '');
+            if (val === 'samyak') {
+                customDesignSettings.sectionBg = '#850f0f';
+                customDesignSettings.sectionAccent = '#c5a353';
+                customDesignSettings.sectionText = '#ffffff';
+                customDesignSettings.sectionAlignment = 'left';
+                customDesignSettings.sectionShape = 'rectangle';
+                customDesignSettings.topicText = '#850f0f';
+                customDesignSettings.topicBorder = '#c5a353';
+                customDesignSettings.topicBorderStyle = 'dashed';
+                customDesignSettings.topicAlignment = 'flex-start';
+                customDesignSettings.topicIcon = 'orange-diamond';
+                customDesignSettings.bulletStyle = 'classic';
+                customDesignSettings.innerBorderColor = '#c5a353';
+                customDesignSettings.cornerColor = '#c5a353';
+                customDesignSettings.borderThick = 1;
+                customDesignSettings.cornerSize = 22;
+                customDesignSettings.dividerColor = '#c5a353';
+                customDesignSettings.dividerStyle = 'dashed';
+                customDesignSettings.dividerThickness = 1.5;
+                customDesignSettings.endStarColor = '#c5a353';
+                customDesignSettings.endStarSymbol = '✦';
+                customDesignSettings.pageNumColor = '#850f0f';
+            } else if (val === 'springboard') {
+                customDesignSettings.sectionBg = '#1d6ea5';
+                customDesignSettings.sectionAccent = '#a0a0a0';
+                customDesignSettings.sectionText = '#ffffff';
+                customDesignSettings.sectionAlignment = 'left';
+                customDesignSettings.sectionShape = 'pill';
+                customDesignSettings.topicText = '#1d6ea5';
+                customDesignSettings.topicBorder = '#a0a0a0';
+                customDesignSettings.topicBorderStyle = 'solid';
+                customDesignSettings.topicAlignment = 'flex-start';
+                customDesignSettings.topicIcon = 'blue-diamond';
+                customDesignSettings.bulletStyle = 'diamond';
+                customDesignSettings.innerBorderColor = '#a0a0a0';
+                customDesignSettings.cornerColor = '#a0a0a0';
+                customDesignSettings.borderThick = 1.5;
+                customDesignSettings.cornerSize = 16;
+                customDesignSettings.dividerColor = '#a0a0a0';
+                customDesignSettings.dividerStyle = 'solid';
+                customDesignSettings.dividerThickness = 1.5;
+                customDesignSettings.endStarColor = '#1d6ea5';
+                customDesignSettings.endStarSymbol = '★';
+                customDesignSettings.pageNumColor = '#1d6ea5';
+            } else if (val === 'utkarsh') {
+                customDesignSettings.sectionBg = '#0d7a5f';
+                customDesignSettings.sectionAccent = '#f47c20';
+                customDesignSettings.sectionText = '#ffffff';
+                customDesignSettings.sectionAlignment = 'center';
+                customDesignSettings.sectionShape = 'left-stripe';
+                customDesignSettings.topicText = '#0d7a5f';
+                customDesignSettings.topicBorder = '#f47c20';
+                customDesignSettings.topicBorderStyle = 'dotted';
+                customDesignSettings.topicAlignment = 'center';
+                customDesignSettings.topicIcon = 'star';
+                customDesignSettings.bulletStyle = 'square';
+                customDesignSettings.innerBorderColor = '#0d7a5f';
+                customDesignSettings.cornerColor = '#f47c20';
+                customDesignSettings.borderThick = 2;
+                customDesignSettings.cornerSize = 20;
+                customDesignSettings.dividerColor = '#f47c20';
+                customDesignSettings.dividerStyle = 'dotted';
+                customDesignSettings.dividerThickness = 2;
+                customDesignSettings.endStarColor = '#f47c20';
+                customDesignSettings.endStarSymbol = '✿';
+                customDesignSettings.pageNumColor = '#0d7a5f';
+            } else if (val === 'vision') {
+                customDesignSettings.sectionBg = '#2b2d42';
+                customDesignSettings.sectionAccent = '#8d99ae';
+                customDesignSettings.sectionText = '#ffffff';
+                customDesignSettings.sectionAlignment = 'left';
+                customDesignSettings.sectionShape = 'underline';
+                customDesignSettings.topicText = '#2b2d42';
+                customDesignSettings.topicBorder = '#8d99ae';
+                customDesignSettings.topicBorderStyle = 'none';
+                customDesignSettings.topicAlignment = 'flex-start';
+                customDesignSettings.topicIcon = 'none';
+                customDesignSettings.bulletStyle = 'arrow';
+                customDesignSettings.innerBorderColor = '#8d99ae';
+                customDesignSettings.cornerColor = '#8d99ae';
+                customDesignSettings.borderThick = 0;
+                customDesignSettings.cornerSize = 0;
+                customDesignSettings.dividerColor = '#8d99ae';
+                customDesignSettings.dividerStyle = 'none';
+                customDesignSettings.dividerThickness = 0;
+                customDesignSettings.endStarColor = '#2b2d42';
+                customDesignSettings.endStarSymbol = '*';
+                customDesignSettings.pageNumColor = '#2b2d42';
+            } else if (val === 'drishti') {
+                customDesignSettings.sectionBg = '#b83a14';
+                customDesignSettings.sectionAccent = '#d4af37';
+                customDesignSettings.sectionText = '#ffffff';
+                customDesignSettings.sectionAlignment = 'center';
+                customDesignSettings.sectionShape = 'ribbon-banner';
+                customDesignSettings.topicText = '#b83a14';
+                customDesignSettings.topicBorder = '#d4af37';
+                customDesignSettings.topicBorderStyle = 'double';
+                customDesignSettings.topicAlignment = 'flex-start';
+                customDesignSettings.topicIcon = 'fleur-de-lis';
+                customDesignSettings.bulletStyle = 'checkmark';
+                customDesignSettings.innerBorderColor = '#d4af37';
+                customDesignSettings.cornerColor = '#d4af37';
+                customDesignSettings.borderThick = 2;
+                customDesignSettings.cornerSize = 25;
+                customDesignSettings.dividerColor = '#d4af37';
+                customDesignSettings.dividerStyle = 'double';
+                customDesignSettings.dividerThickness = 3;
+                customDesignSettings.endStarColor = '#b83a14';
+                customDesignSettings.endStarSymbol = '✦';
+                customDesignSettings.pageNumColor = '#b83a14';
+            }
+            applyCustomDesignSettingsToDOM();
+        } else {
+            // Instantly sync custom design panel values to match the theme color properties!
+            syncDesignControlsWithTheme();
+        }
     }
 
     function updateZoom() {
@@ -6082,7 +6211,13 @@ document.addEventListener('DOMContentLoaded', () => {
             { value: 'diamond-column', name: '💎 Diamond Column Premium', category: 'ultra-premium', colors: ['#0f172a', '#3b82f6', '#64748b'] },
             { value: 'diamond-column-compact', name: '💎 Diamond Column Premium - Compact', category: 'ultra-premium', colors: ['#0f172a', '#3b82f6', '#64748b'] },
             { value: 'theme-raaz', name: '🔥 RAAZ Ultimate Premium', category: 'ultra-premium', colors: ['#0a0a0a', '#d4af37', '#800020'] },
-            { value: 'theme-raaz-compact', name: '🔥 RAAZ Ultimate Premium - Compact', category: 'ultra-premium', colors: ['#0a0a0a', '#d4af37', '#800020'] }
+            { value: 'theme-raaz-compact', name: '🔥 RAAZ Ultimate Premium - Compact', category: 'ultra-premium', colors: ['#0a0a0a', '#d4af37', '#800020'] },
+            // Coaching Brand Presets as First-Class Themes
+            { value: 'coaching-samyak', name: '🏫 Coaching: Samyak Maroon & Gold', category: 'classic', colors: ['#850f0f', '#c5a353', '#ffffff'] },
+            { value: 'coaching-springboard', name: '🏫 Coaching: Springboard Navy', category: 'classic', colors: ['#1d6ea5', '#a0a0a0', '#ffffff'] },
+            { value: 'coaching-utkarsh', name: '🏫 Coaching: Utkarsh Green', category: 'classic', colors: ['#0d7a5f', '#f47c20', '#ffffff'] },
+            { value: 'coaching-vision', name: '🏫 Coaching: Vision IAS Gray', category: 'classic', colors: ['#2b2d42', '#8d99ae', '#ffffff'] },
+            { value: 'coaching-drishti', name: '🏫 Coaching: Drishti IAS Saffron', category: 'classic', colors: ['#b83a14', '#d4af37', '#ffffff'] }
         ];
 
         // Load pinned themes from localStorage

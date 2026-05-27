@@ -2389,6 +2389,61 @@ a.footer-social-link:hover {
     pointer-events: none;
 }
 
+/* 6. UPSC Dynamic GS Syllabus Tag */
+.premium-box.box-upsc-syllabus {
+    background: rgba(37, 99, 235, 0.04) !important;
+    border: 1px solid rgba(37, 99, 235, 0.15) !important;
+    border-left: 5px solid #2563eb !important;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-sizing: border-box;
+}
+
+/* 7. UPSC Editorial Quote Box */
+.premium-box.box-upsc-editorial {
+    background: #f8fafc !important;
+    border: none !important;
+    border-left: 4px solid #f59e0b !important;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-style: italic;
+    color: #334155;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.01);
+}
+
+/* 8. UPSC Mains Answer Frame Box */
+.premium-box.box-upsc-mains {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-top: 4px solid #10b981 !important;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+.premium-box.box-upsc-mains p {
+    margin-bottom: 6px;
+}
+
+/* 9. UPSC Cornell Marginal Note */
+.premium-box.box-upsc-marginal {
+    background: #fffdf5 !important;
+    border: 1.5px dashed #d97706 !important;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 11px;
+    color: #78350f;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.02);
+}
+
 .premium-box .bullet-item {
     margin-bottom: 4px;
 }
